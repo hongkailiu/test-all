@@ -1,5 +1,6 @@
 package com.hongkailiu.test.webapp.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+
 /**
  * 
  * ref: http://www.mkyong.com/spring-security/spring-security-form-login-using-database/
@@ -19,10 +21,12 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class MainController {
+	
+	private static final Logger logger = Logger.getLogger(MainController.class);
 
 	@RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
 	public ModelAndView defaultPage() {
-
+		logger.debug("==============default page==================");
 		ModelAndView model = new ModelAndView();
 		model.addObject("title", "Spring Security Login Form - Database Authentication");
 		model.addObject("message", "This is default page!");
