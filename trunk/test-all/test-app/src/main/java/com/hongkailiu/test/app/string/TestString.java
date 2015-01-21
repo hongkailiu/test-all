@@ -23,6 +23,18 @@ public class TestString {
 		test8();
 		test9();
 		test10();
+		test11();
+		
+	}
+
+	private static void test11() {
+		double d = -27.2345;
+		System.out.println(Math.ceil(d));
+		System.out.println(Math.round(d));
+		System.out.println(Math.abs(d));
+		System.out.println(Math.floor(d));
+		
+		System.out.println(Integer.parseInt(2+3+""));
 	}
 
 	private static void test10() {
