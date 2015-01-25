@@ -24,6 +24,7 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>com.hongkailiu.test.app.hibernate.entity.Person</value>
+				<value>com.hongkailiu.test.app.hibernate.entity.Certificate</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -36,6 +37,9 @@
 	</bean>
 
 	<bean id="personDAO" class="com.hongkailiu.test.app.hibernate.dao.PersonDAOImpl">
+		<property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
+	</bean>
+	<bean id="certificateDAO" class="com.hongkailiu.test.app.hibernate.dao.CertificateDAOImpl">
 		<property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
 	</bean>
 </beans>

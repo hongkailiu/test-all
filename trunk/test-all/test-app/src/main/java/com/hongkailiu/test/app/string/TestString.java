@@ -24,7 +24,14 @@ public class TestString {
 		test9();
 		test10();
 		test11();
-		
+		test12();
+	}
+
+	private static void test12() {
+		String str = null;
+		System.out.println("recursion: " + StringUtil.reverseRecursion(str));
+		System.out.println("loop: " + StringUtil.reverseLoop(str));
+		System.out.println("api: " + StringUtil.reverseApi(str));
 	}
 
 	private static void test11() {
