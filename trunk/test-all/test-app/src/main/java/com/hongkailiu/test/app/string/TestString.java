@@ -25,6 +25,18 @@ public class TestString {
 		test10();
 		test11();
 		test12();
+		test13();
+	}
+
+	private static void test13() {
+		String a = "a";
+		System.out.println("a: " + a);
+		changeA(a);
+		System.out.println("a: " + a);
+	}
+
+	private static void changeA(String a) {
+		a="b";
 	}
 
 	private static void test12() {
