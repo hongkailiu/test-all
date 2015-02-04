@@ -23,6 +23,15 @@ import org.springframework.web.servlet.ModelAndView;
 public class MainController {
 	
 	private static final Logger logger = Logger.getLogger(MainController.class);
+	
+	@RequestMapping(value = { "/index"}, method = RequestMethod.GET)
+	public ModelAndView index() {
+		logger.debug("==============index page==================");
+		ModelAndView model = new ModelAndView();
+		model.setViewName("index");
+		return model;
+
+	}
 
 	@RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
 	public ModelAndView defaultPage() {
