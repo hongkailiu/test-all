@@ -13,6 +13,8 @@
 	<!-- <context:component-scan base-package="com.mkyong.*" /> -->
 	<!-- 自动扫描bean，把作了注解的类转换为bean -->
 	<context:component-scan base-package="com.hongkailiu.test.webapp.controller" />
+	<context:component-scan base-package="com.hongkailiu.test.webapp.proxy" />
+	
 	<!-- 返回json -->
 	<mvc:annotation-driven />
 	

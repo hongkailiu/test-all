@@ -13,7 +13,8 @@ public class TVSeriesJsonResult extends BaseJsonResult {
 	private int seasonWatched;
 	private int episodeWatched;
 	private byte[] image;
-	private byte[] imageMd5;
+	private String imageMd5;
+	private String imageUrl;
 	public long getId() {
 		return id;
 	}
@@ -56,11 +57,17 @@ public class TVSeriesJsonResult extends BaseJsonResult {
 	public void setImage(byte[] image) {
 		this.image = image;
 	}
-	public byte[] getImageMd5() {
+	public String getImageMd5() {
 		return imageMd5;
 	}
-	public void setImageMd5(byte[] imageMd5) {
+	public void setImageMd5(String imageMd5) {
 		this.imageMd5 = imageMd5;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 	
 }
