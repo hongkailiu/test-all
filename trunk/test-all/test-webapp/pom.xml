@@ -113,7 +113,11 @@
 		<version>2.0</version>
 		<scope>provided</scope>
 	</dependency>
-	
+	<dependency>
+		<groupId>com.hongkailiu.test</groupId>
+		<artifactId>test-app</artifactId>
+		<version>${project.version}</version>
+	</dependency>
   </dependencies>
   <build>
     <finalName>test-webapp</finalName>
