@@ -50,10 +50,10 @@ public class TVSeriesNetworkService extends Service {
 									for (TVSeriesJsonResult tvSeriesJsonResult : list) {
 										TVSeries tvSeries = new TVSeries(tvSeriesJsonResult);
 										TVSeriesService.getInstance(TVSeriesNetworkService.this).save(tvSeries);
-										Intent intent = new Intent();
-										intent.setAction(Action.UPDATE_TV_SERIES_UI_ACTION);
-										sendBroadcast(intent); 
 									}
+									Intent intent = new Intent();
+									intent.setAction(Action.UPDATE_TV_SERIES_UI_ACTION);
+									sendBroadcast(intent); 
 								}
 							}
 						}

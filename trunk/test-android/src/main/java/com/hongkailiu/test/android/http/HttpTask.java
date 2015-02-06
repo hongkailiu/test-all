@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -70,7 +71,7 @@ public abstract class HttpTask extends Thread {
 			HttpResponse response = defaultHttpClient.execute(request);
 			int statusCode = response.getStatusLine().getStatusCode();
 			Log.d(Param.LOG_TAG, "statusCode: " + statusCode);
-			if (statusCode== 200) {
+			if (statusCode== HttpStatus.SC_OK) {
 				handleHttpResponse(response);
 			}
 			defaultHttpClient.getConnectionManager().shutdown();
