@@ -15,6 +15,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hongkailiu.test.android.activity.MyFragmentActivity;
 import com.hongkailiu.test.android.activity.TVSeriesActivity;
 import com.hongkailiu.test.android.param.Param;
 
@@ -63,6 +64,7 @@ public class MainActivity extends Activity {
     
     private void initText() {
 		textArray[0] = "tvSeries";
+		textArray[1] = "myFragment";
 	}
     
     private void handleClick(int position) {
@@ -71,6 +73,9 @@ public class MainActivity extends Activity {
 		switch (position) {
 		case 0:
 			startActivity(TVSeriesActivity.class);
+			break;
+		case 1:
+			startActivity(MyFragmentActivity.class);
 			break;
 		default:
 

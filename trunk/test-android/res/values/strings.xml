@@ -7,5 +7,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="image">image</string>
     <string name="text">text</string>
+    <string name="landscape_message">This is Landscape mode fragment</string>
+    <string name="portrait_message">This is Portrait mode fragment</string>
+    <string name="title_activity_my_fragment">MyFragmentActivity</string>
 
 </resources>
