@@ -1,6 +1,5 @@
 package com.hongkailiu.test.app.hibernate.entity;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -80,6 +79,7 @@ public class Person {
 
 	// 如果不用eager策略，需要在DAO层保留session，也就是说不执行close操作
 	// 生产环境下可以考虑手动实现certificates集合的赋值，在service层，调用CertificateDAO
+	// ref. https://docs.jboss.org/hibernate/orm/3.3/reference/en/html/performance.html
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "person_id")
 	private Set<Certificate> certificates;

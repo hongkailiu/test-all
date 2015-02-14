@@ -1,20 +1,27 @@
 package com.hongkailiu.test.app.hibernate.dao;
 
-import java.util.List;
 import java.util.Set;
+
+import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.hongkailiu.test.app.hibernate.entity.Certificate;
 import com.hongkailiu.test.app.hibernate.entity.Person;
-import com.hongkailiu.test.app.string.TestString;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:applicationContext.xml")
 public class PersonDAOImplTest {
 
-	// @Autowired
-	// ApplicationContext context;
+	//@Resource(name="tvSeriesServiceImpl")
+	@Autowired
+	private PersonDAO personDAO;
 
 	static Logger logger = Logger.getLogger(PersonDAOImplTest.class);
 
@@ -22,9 +29,9 @@ public class PersonDAOImplTest {
 	public void test() {
 
 		logger.debug("testSave");
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-				"applicationContext.xml");
-		PersonDAO personDAO = context.getBean(PersonDAO.class);
+//		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
+//				"applicationContext.xml");
+//		PersonDAO personDAO = context.getBean(PersonDAO.class);
 //		Person person = new Person();
 //		person.setName("aaa");
 //		person.setCountry("ccc");
@@ -39,7 +46,7 @@ public class PersonDAOImplTest {
 		logger.debug("Person findById::" + person);
 		Set<Certificate> certificates = person.getCertificates();
 		logger.debug("size: " + certificates.size());
-		context.close();
+//		context.close();
 	}
 
 }
