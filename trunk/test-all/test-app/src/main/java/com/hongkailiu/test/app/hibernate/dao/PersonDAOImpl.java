@@ -45,4 +45,24 @@ public class PersonDAOImpl implements PersonDAO {
 		return person;
 	}
 
+	@Override
+	public void delete(Person p) {
+		Session session = this.sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.delete(p);
+		tx.commit();
+		session.close();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Person> findByName(String name) {
+		Session session = this.sessionFactory.openSession();
+		Query query = session.createQuery("from Person as p where p.name=:name");
+		query.setString("name", name);
+		List<Person> personList = query.list();
+		session.close();
+		return personList;
+	}
+
 }

@@ -2,22 +2,23 @@ package com.hongkailiu.test.app.hibernate.entity;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "Person")
 public class Person {
 	@Id
 	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
 	private String name;
@@ -80,8 +81,11 @@ public class Person {
 	// 如果不用eager策略，需要在DAO层保留session，也就是说不执行close操作
 	// 生产环境下可以考虑手动实现certificates集合的赋值，在service层，调用CertificateDAO
 	// ref. https://docs.jboss.org/hibernate/orm/3.3/reference/en/html/performance.html
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "person_id")
+	// inverse http://stackoverflow.com/questions/4865285/inverse-true-in-jpa-annotations
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="person")
+	//@OneToMany(fetch = FetchType.EAGER)
+	//@JoinColumn(name = "person_id")
+	//@Cascade({CascadeType.SAVE_UPDATE})
 	private Set<Certificate> certificates;
 
 	public Set<Certificate> getCertificates() {

@@ -19,7 +19,7 @@ public class Certificate {
     private String name;
     
     @ManyToOne
-    @JoinColumn(name="person_id")
+    @JoinColumn(name="person_id", nullable = true)
     private Person person;
      
     public int getId() {
