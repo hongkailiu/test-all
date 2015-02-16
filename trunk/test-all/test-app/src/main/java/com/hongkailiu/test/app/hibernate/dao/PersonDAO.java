@@ -4,10 +4,8 @@ import java.util.List;
 
 import com.hongkailiu.test.app.hibernate.entity.Person;
 
-public interface PersonDAO {
-	public void save(Person p);
-    public List<Person> list();
+public interface PersonDAO extends BaseDAO<Person> {
     public Person findById(int id);
-    public void delete(Person p);
     public List<Person> findByName(String name);
+    public List<Person> findByName2(String name);
 }

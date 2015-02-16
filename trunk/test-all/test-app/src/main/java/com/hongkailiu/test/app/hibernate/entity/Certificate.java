@@ -1,5 +1,7 @@
 package com.hongkailiu.test.app.hibernate.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 @Entity
 @Table(name="certificate")
-public class Certificate {
+public class Certificate implements Serializable {
+
+	private static final long serialVersionUID = 5650067212639822933L;
+
 	@Id
     @Column(name="id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)

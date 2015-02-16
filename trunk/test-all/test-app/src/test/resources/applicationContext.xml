@@ -2,19 +2,24 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context" 
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd 
         http://www.springframework.org/schema/jdbc  http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
-        ">
+        http://www.springframework.org/schema/context 
+     http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" 
-		destroy-method="close"> <property name="driverClassName" value="com.mysql.jdbc.Driver" 
-		/> <property name="url" value="jdbc:mysql://192.168.0.160:3306/mytest" /> 
-		<property name="connectionProperties" value="useUnicode=yes;characterEncoding=utf8;" 
-		/> <property name="username" value="liu" /> <property name="password" value="123456" 
-		/> </bean> -->
+	<!-- 
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://192.168.0.160:3306/mytest" />
+		<property name="connectionProperties" value="useUnicode=yes;characterEncoding=utf8;" />
+		<property name="username" value="liu" />
+		<property name="password" value="123456" />
+	</bean> -->
 	<!-- 	
 		<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
@@ -25,10 +30,9 @@
 		<property name="password" value="" />
 	</bean> -->
 
-	<!-- h2: in-memory database for testing -->
+	<!-- h2: in-memory database for testing  -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-		<!-- <property name="driverClass" value="org.h2.Driver" /> -->
 		<property name="driverClass" value="com.p6spy.engine.spy.P6SpyDriver" />
 		<property name="url"
 			value="jdbc:p6spy:h2:mem:mytest;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE" />
@@ -45,12 +49,14 @@
 	<bean id="hibernate3AnnotatedSessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
+		<!-- 
 		<property name="annotatedClasses">
 			<list>
 				<value>com.hongkailiu.test.app.hibernate.entity.Person</value>
 				<value>com.hongkailiu.test.app.hibernate.entity.Certificate</value>
 			</list>
-		</property>
+		</property> -->
+		<property name="packagesToScan" value="com.hongkailiu.test.app.hibernate.entity"/>
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
@@ -59,7 +65,10 @@
 			</props>
 		</property>
 	</bean>
+	
+	<context:component-scan base-package="com.hongkailiu.test.app.hibernate.dao.impl" />
 
+	<!-- 
 	<bean id="personDAO" class="com.hongkailiu.test.app.hibernate.dao.PersonDAOImpl">
 		<property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
 	</bean>
@@ -67,4 +76,5 @@
 		class="com.hongkailiu.test.app.hibernate.dao.CertificateDAOImpl">
 		<property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
 	</bean>
+	 -->
 </beans>

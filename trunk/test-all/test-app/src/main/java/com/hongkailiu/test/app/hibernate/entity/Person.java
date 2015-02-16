@@ -1,5 +1,6 @@
 package com.hongkailiu.test.app.hibernate.entity;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,10 +13,16 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 
 @Entity
 @Table(name = "Person")
-public class Person {
+public class Person implements Serializable {
+
+	private static final long serialVersionUID = 3233110155779286919L;
+
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -83,7 +90,7 @@ public class Person {
 	// ref. https://docs.jboss.org/hibernate/orm/3.3/reference/en/html/performance.html
 	// inverse http://stackoverflow.com/questions/4865285/inverse-true-in-jpa-annotations
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="person")
-	//@OneToMany(fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT) 
 	//@JoinColumn(name = "person_id")
 	//@Cascade({CascadeType.SAVE_UPDATE})
 	private Set<Certificate> certificates;

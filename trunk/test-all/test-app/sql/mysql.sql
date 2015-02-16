@@ -38,7 +38,7 @@ DROP TABLE IF EXISTS `certificate`;
 CREATE TABLE `certificate` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) COLLATE utf8_bin NOT NULL,
-  `person_id` int(20) NOT NULL,
+  `person_id` int(20) NULL,
   PRIMARY KEY (`id`),
   KEY `FK_certificate` (`person_id`),
   CONSTRAINT `FK_certificate` FOREIGN KEY (`person_id`) REFERENCES `Person` (`id`)
