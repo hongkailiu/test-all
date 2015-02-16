@@ -1,4 +1,4 @@
-package com.hongkailiu.test.app.io;
+package com.hongkailiu.test.app.util;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,30 +13,25 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
-/**
- * check IOUtil class in the util package
- * 
- * @author Liu
- *
- */
-@Deprecated
-public class IOTest {
-	public static void main(String[] args) {
-		System.out.println("IOTest.main");
-		String filename = "file\\test.dat";
-		try {
-			System.out.println("read");
-			read(filename);
-			System.out.println("readCommonIO");
-			readCommonIO(filename,"UTF-8");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+public class IOUtil {
+
+	public static byte[] toByteArray(InputStream is) throws IOException {
+		return IOUtils.toByteArray(is);
 	}
 
+	public static byte[] toByteArray(String filename) throws IOException {
+		InputStream is = null;
+		try {
+			is = new FileInputStream(filename);
+			return toByteArray(is);
+		} finally {
+			IOUtils.closeQuietly(is);
+		}
+	}
+	
 	public static void read(InputStream is) throws IOException {
 		BufferedReader br = null;
 		try {
