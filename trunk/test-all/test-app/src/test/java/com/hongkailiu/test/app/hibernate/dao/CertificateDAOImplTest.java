@@ -75,7 +75,7 @@ public class CertificateDAOImplTest {
 		}
 
 		List<Person> bbbList = personDAO.list();
-		if (aaaList != null) {
+		if (bbbList != null) {
 			for (Person p : bbbList) {
 				logger.debug("p: " + p);
 				personDAO.delete(p);
