@@ -1,4 +1,4 @@
-package com.hongkailiu.test.app.sort;
+package com.hongkailiu.test.app.comparable;
 
 import java.util.Comparator;
 

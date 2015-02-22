@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace名字必须与Mapper接口名一致 -->
+<mapper namespace="com.hongkailiu.test.app.mybatis.mapper.PersonMapper">
+	<select id="list" resultMap="personMap">
+		select * from person
+	</select>
+	<insert id="insert" parameterType="Person" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO Person(name, country)
+		VALUES(#{name}, #{country})
+	</insert>
+	<delete id="deleteById" parameterType="int">
+		DELETE FROM Person WHERE id = #{id}
+	</delete>
+</mapper>

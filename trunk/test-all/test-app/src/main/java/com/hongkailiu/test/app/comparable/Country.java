@@ -1,4 +1,4 @@
-package com.hongkailiu.test.app.sort;
+package com.hongkailiu.test.app.comparable;
 
 /**
  * ref. http://www.javacodegeeks.com/2013/03/difference-between-comparator-and-comparable-in-java.html

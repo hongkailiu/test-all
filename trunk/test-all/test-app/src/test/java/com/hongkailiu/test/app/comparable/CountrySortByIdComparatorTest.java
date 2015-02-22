@@ -1,4 +1,4 @@
-package com.hongkailiu.test.app.sort;
+package com.hongkailiu.test.app.comparable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,6 +9,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.hongkailiu.test.app.comparable.Country;
+import com.hongkailiu.test.app.comparable.CountrySortByIdComparator;
 
 public class CountrySortByIdComparatorTest {
 

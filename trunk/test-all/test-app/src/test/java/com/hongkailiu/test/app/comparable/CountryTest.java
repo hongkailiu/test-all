@@ -1,8 +1,10 @@
-package com.hongkailiu.test.app.sort;
+package com.hongkailiu.test.app.comparable;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import com.hongkailiu.test.app.comparable.Country;
 
 public class CountryTest {
 
