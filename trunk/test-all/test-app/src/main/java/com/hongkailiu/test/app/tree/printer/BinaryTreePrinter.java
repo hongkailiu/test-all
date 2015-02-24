@@ -1,8 +1,10 @@
-package com.hongkailiu.test.app.tree;
+package com.hongkailiu.test.app.tree.printer;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import com.hongkailiu.test.app.tree.other.SimpleTree;
 
 /**
  * 

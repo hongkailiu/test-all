@@ -14,5 +14,10 @@ public abstract class C extends B implements IA {
 	public int c() {
 		return 3;
 	}
+	
+	@Override
+	public J rA(){
+		return null;
+	}
 
 }

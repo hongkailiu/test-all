@@ -1,4 +1,4 @@
-package com.hongkailiu.test.app.tree;
+package com.hongkailiu.test.app.tree.other;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

@@ -5,25 +5,47 @@ import java.util.List;
 import com.hongkailiu.test.app.helper.CollectionHelper;
 import com.hongkailiu.test.app.helper.CollectionHelperImpl;
 
-
-public class BinarySearchTree<T extends Comparable<T>> {
+//public class BinarySearchTree<T extends Comparable<T>> {
+public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> {
 	
-	private CollectionHelper helper = CollectionHelperImpl.getInstance();
-
-	private SimpleTree<T> tree;
-
-	public SimpleTree<T> getTree() {
-		return tree;
+	private BinarySearchTree<T> left;
+	private BinarySearchTree<T> right;
+	
+	public BinarySearchTree<T> getLeft() {
+		return left;
 	}
 
-	public BinarySearchTree(SimpleTree<T> tree) {
-        super();
-        this.tree = tree;
-        validate();
+	public void setLeft(BinarySearchTree<T> left) {
+		super.setLeft(left);
+		this.left = left;
+	}
+
+	public BinarySearchTree<T> getRight() {
+		return right;
+	}
+
+	public void setRight(BinarySearchTree<T> right) {
+		super.setRight(right);
+		this.right = right;
+	}
+
+
+	private static CollectionHelper helper = CollectionHelperImpl.getInstance();
+
+	public BinarySearchTree(T value) {
+        super(value);
+    }
+	
+	public BinarySearchTree(T value, BinarySearchTree<T> left, BinarySearchTree<T> right) {
+        super(value,left,right);
+        this.left = left;
+        this.right = right;
     }
 
-    private void validate() {
-    	List<T> list1 = tree.getValuesInOrder();
+	@Override
+    protected void validate() {
+    	super.validate();
+    	List<T> list1 = depthFirstTraversalInOrder();
     	if (!helper.isOrdered(list1)) {
     		throw new IllegalArgumentException("not ordered");
     	}
@@ -33,52 +55,35 @@ public class BinarySearchTree<T extends Comparable<T>> {
     	}
 	}
 
+	@Override
 	public boolean search(final T toFind) {
-        return search(tree, toFind);
-    }
-    
-    private boolean search(final SimpleTree<T> tree, final T toFind) {
-    	if (tree==null) {
-    		return false;
-    	}
-        if (toFind.equals(tree.value)) {
+		if (toFind.equals(value)) {
             return true;
         }
 
-        if (toFind.compareTo(tree.value) < 0 && tree.left != null) {
-            return search(tree.left, toFind);
+        if (toFind.compareTo(value) < 0 && left != null) {
+            return left.search(toFind);
         }
 
-        return tree.right != null && search(tree.right, toFind);
+        return right != null && right.search(toFind);
     }
     
     public void insert(final T toInsert) {
-    	this.tree = insert(this.tree, toInsert);
-    	validate();
-    }
-
-    private SimpleTree<T> insert(final SimpleTree<T> tree, final T toInsert) {
-    	if (tree==null) {
-    		return new SimpleTree<T>(toInsert, null,null);
-    	} else if (toInsert.compareTo(tree.value) < 0) {
-            if (tree.left == null) {
-            	tree.left = new SimpleTree<T>(toInsert, null, null);
+    	if (value.equals(toInsert)) {
+    		// do nothing since no duplicates allowed in BST
+    	} else if (toInsert.compareTo(value) < 0) {
+            if (left == null) {
+            	setLeft(new BinarySearchTree<T>(toInsert, null, null));
             } else {
-            	insert(tree.left,toInsert);
+            	left.insert(toInsert);
             }
-            return tree;
         } else {
-            if (tree.right == null) {
-            	tree.right = new SimpleTree<T>(toInsert, null, null);
+            if (right == null) {
+            	setRight(new BinarySearchTree<T>(toInsert, null, null));
             } else {
-            	insert(tree.right,toInsert);
+            	right.insert(toInsert);
             }
-            return tree;
         }
-    }
-    
-    public void delete(final T toDelete) {
-    	this.tree = delete(tree, toDelete);
     	validate();
     }
     
@@ -89,45 +94,50 @@ public class BinarySearchTree<T extends Comparable<T>> {
      * hongkai: more to test
      * @param toDelete
      */
-	private SimpleTree<T> delete(final SimpleTree<T> tree, final T toDelete) {
-		if (tree==null) {
-    		return null;
-    	} else if (toDelete.compareTo(tree.value) == 0) {
-			if (tree.left != null && tree.right != null) {
-				SimpleTree<T> rightMost = findRightMost(tree.left);
-				tree.value = rightMost.value;
-				tree.left = delete(tree.left, rightMost.value);
-				return tree;
+    @Override
+    public BinarySearchTree<T> delete(final T toDelete) {
+    	BinarySearchTree<T> result = this;
+    	if (toDelete.equals(value)) {
+			if (left != null && right != null) {
+				BinarySearchTree<T> rightMost = findRightMost(left);
+				value = rightMost.value;
+				setLeft(left.delete(rightMost.value));
+				//return this;
 			} else {
-				if (tree.left == null) {
-					return tree.right;
+				if (left == null) {
+					//return right;
+					result = right;
 				} else {
-					return tree.left;
+					//return left;
+					result = left;
 				}
 			}
 
-		} else if (toDelete.compareTo(tree.value) < 0) {
-			if (tree.left == null) {
-				return tree;
+		} else if (toDelete.compareTo(value) < 0) {
+			if (left == null) {
+				//return this;
 			} else {
-				tree.left  = delete(tree.left, toDelete);
-				return tree;
+				setLeft(left.delete(toDelete));
+				//return this;
 			}
 		} else {
-			if (tree.right == null) {
-				return tree;
+			if (right == null) {
+				//return this;
 			} else {
-				tree.right = delete(tree.right, toDelete);
-				return tree;
+				setRight(right.delete(toDelete));
+				//return this;
 			}
 		}
-	}
+    	validate();
+    	return result;
+    }
+
     
-    private SimpleTree<T> findRightMost(final SimpleTree<T> root) {
+    private BinarySearchTree<T> findRightMost(final BinarySearchTree<T> root) {
     	if (root==null){
     		return null;
     	}
-    	SimpleTree<T> result = root;
+    	BinarySearchTree<T> result = root;
     	while (result.right!=null) {
     		result = result.right;
     	}

@@ -7,5 +7,9 @@ public abstract class B  implements IA {
 	protected int c() {
 		return 3;
 	}
+	
+	public H rA(){
+		return null;
+	}
 
 }
