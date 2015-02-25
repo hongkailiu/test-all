@@ -23,7 +23,7 @@ public class MergeSorter<T extends Comparable<T>> implements Sorter<T> {
 		}
 		List<T> list = Arrays.asList(array);
 		list = mergeSort(list);
-		System.arraycopy(list.toArray(), 0, array, 0, array.length);;
+		System.arraycopy(list.toArray(), 0, array, 0, array.length);
 	}
 
 	private List<T> mergeSort(List<T> list) {

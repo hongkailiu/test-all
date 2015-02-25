@@ -30,4 +30,17 @@ public interface CollectionHelper {
 	 * @return
 	 */
 	public <T> boolean isOrdered(Iterable<? extends Comparable<T>> iterable);
+
+	/**
+	 * Returns a reversed view of the specified list. For example,
+	 * Lists.reverse(Arrays.asList(1, 2, 3)) returns a list containing 3, 2, 1.
+	 * The returned list is backed by this list, so changes in the returned list
+	 * are reflected in this list, and vice-versa. The returned list supports
+	 * all of the optional list operations supported by this list. The returned
+	 * list is random-access if the specified list is random access.
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public <T> List<T> reverse(List<T> list);
 }

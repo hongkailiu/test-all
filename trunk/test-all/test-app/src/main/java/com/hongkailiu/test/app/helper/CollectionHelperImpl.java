@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 
 public class CollectionHelperImpl implements CollectionHelper {
@@ -40,6 +41,11 @@ public class CollectionHelperImpl implements CollectionHelper {
 	@Override
 	public <T> boolean isOrdered(Iterable<? extends Comparable<T>> iterable) {
 		return Ordering.natural().isOrdered(iterable);
+	}
+	
+	@Override
+	public <T> List<T> reverse(List<T> list) {
+		return Lists.reverse(list);
 	}
 
 }

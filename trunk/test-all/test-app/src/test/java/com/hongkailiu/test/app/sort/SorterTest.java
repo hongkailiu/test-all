@@ -15,6 +15,7 @@ import org.junit.Test;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Ordering;
 import com.hongkailiu.test.app.sort.impl.BubbleSorter;
+import com.hongkailiu.test.app.sort.impl.HeapSorter;
 import com.hongkailiu.test.app.sort.impl.InsertionSorter;
 import com.hongkailiu.test.app.sort.impl.MergeSorter;
 import com.hongkailiu.test.app.sort.impl.QuickSorter;
@@ -83,6 +84,12 @@ public class SorterTest {
 	@Test
 	public void testMergeSorter() {
 		sorter = new MergeSorter<Integer>();
+		testIt();
+	}
+	
+	@Test
+	public void testHeapSorter() {
+		sorter = new HeapSorter<Integer>();
 		testIt();
 	}
 
