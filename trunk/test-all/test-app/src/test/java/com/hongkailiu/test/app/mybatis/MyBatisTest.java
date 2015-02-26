@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.hongkailiu.test.app.db.PersonDAOTest;
 import com.hongkailiu.test.app.mybatis.entity.Person;
 import com.hongkailiu.test.app.mybatis.service.PersonService;
 

@@ -1,6 +1,5 @@
 package com.hongkailiu.test.app.search;
 
-import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
