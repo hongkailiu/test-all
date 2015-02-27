@@ -41,4 +41,12 @@ public class NonDirectedGraph extends Graph {
 	}
 	
 
+	/**
+	 * a minimum spanning tree of the graph
+	 * P Lefore 643
+	 * @return
+	 */
+	public Map<Vertex, Vertex> getAMinimumSpanningTree(){
+		throw new RuntimeException("motheod not implemented yet");
+	}
 }

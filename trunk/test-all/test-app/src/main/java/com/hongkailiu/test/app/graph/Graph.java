@@ -76,4 +76,8 @@ public class Graph {
 		this.connector = connector;
 		this.connector.setGraph(this);
 	}
+	
+	public boolean isDirected(){
+		throw new RuntimeException("motheod not implemented yet");
+	}
 }

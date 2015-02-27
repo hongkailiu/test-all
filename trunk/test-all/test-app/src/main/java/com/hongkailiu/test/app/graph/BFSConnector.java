@@ -7,6 +7,11 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+/**
+ * breadth-first searching
+ * @author Liu
+ *
+ */
 public class BFSConnector implements Connector {
 	
 	static Logger logger = Logger.getLogger(BFSConnector.class);

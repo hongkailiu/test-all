@@ -7,6 +7,11 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+/**
+ * depth-first searching
+ * @author Liu
+ *
+ */
 public class DFSConnector implements Connector {
 	
 	Logger logger = Logger.getLogger(this.getClass());
