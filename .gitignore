@@ -2,10 +2,8 @@
 /trunk/test-all/test-app/.classpath
 /trunk/test-all/test-app/.project
 
-/trunk/test-all/*
 /trunk/test-all/*.project
 
-/trunk/test-book/*
 /trunk/test-book/*.classpath
 /trunk/test-book/*.project
 
@@ -13,9 +11,16 @@
 /trunk/test-gs/.settings
 /trunk/test-gs/.classpath
 
-/trunk/test-android/*
 /trunk/test-android/*.classpath
 /trunk/test-android/*.project
 /trunk/test-android/*
 
 /trunk/test-scala/.cache
+
+/trunk/test-all/.settings
+
+/trunk/test-all/test-webapp/.classpath
+/trunk/test-all/test-webapp/.project
+/trunk/test-all/test-webapp/.settings
+
+/trunk/test-book/.settings

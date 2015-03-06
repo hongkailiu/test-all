@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd 
+        http://www.springframework.org/schema/jdbc  http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+        http://www.springframework.org/schema/context 
+     http://www.springframework.org/schema/context/spring-context-4.0.xsd
+     http://www.springframework.org/schema/data/mongo
+          http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
+
+	<!-- 
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://192.168.0.160:3306/mytest" />
+		<property name="connectionProperties" value="useUnicode=yes;characterEncoding=utf8;" />
+		<property name="username" value="liu" />
+		<property name="password" value="123456" />
+	</bean> -->
+	<!-- 	
+		<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="org.h2.Driver" />
+		<property name="url"
+			value="jdbc:h2:mem:mytest;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE" />
+		<property name="username" value="" />
+		<property name="password" value="" />
+	</bean> -->
+
+	<!-- h2: in-memory database for testing
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="com.p6spy.engine.spy.P6SpyDriver" />
+		<property name="url"
+			value="jdbc:p6spy:h2:mem:mytest;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE" />
+		<property name="username" value="" />
+		<property name="password" value="" />
+	</bean>  -->
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:config.properties</value>
+		</property>
+	</bean>
+    
+	<!-- dbcp connection pool -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"  destroy-method="close">  
+	    <property name="driverClassName" value="${driver}" />  
+	    <property name="url" value="${driverUrl}" />  
+	    <property name="username" value="${username}" />  
+	    <property name="password" value="${password}" /> 
+	    <property name="initialSize" value="${initialSize}"/>           
+        <property name="maxActive" value="${maxActive}"/>
+        <property name="validationQuery" value="${validationQuery}"/>
+        <property name="testWhileIdle" value="${testWhileIdle}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}"/>
+        <property name="testOnBorrow" value="${testOnBorrow}"/>        
+	</bean>
+
+	<jdbc:initialize-database data-source="dataSource"
+		ignore-failures="DROPS">
+		<jdbc:script location="classpath:schema_h2.sql" />
+	</jdbc:initialize-database>
+
+	<!-- hiberante 3: begin -->
+	<!-- Hibernate 3 Annotation SessionFactory Bean definition -->
+	<bean id="hibernate3AnnotatedSessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 
+		<property name="annotatedClasses">
+			<list>
+				<value>com.hongkailiu.test.app.hibernate.entity.Person</value>
+				<value>com.hongkailiu.test.app.hibernate.entity.Certificate</value>
+			</list>
+		</property> -->
+		<property name="packagesToScan" value="com.hongkailiu.test.app.hibernate.entity"/>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.current_session_context_class">thread</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<context:component-scan base-package="com.hongkailiu.test.app.hibernate.dao.impl" />
+
+	<!-- 
+	<bean id="personDAO" class="com.hongkailiu.test.app.hibernate.dao.PersonDAOImpl">
+		<property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
+	</bean>
+	<bean id="certificateDAO"
+		class="com.hongkailiu.test.app.hibernate.dao.CertificateDAOImpl">
+		<property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
+	</bean>
+	 -->
+	<context:component-scan base-package="com.hongkailiu.test.app.hibernate.service" />
+	<tx:annotation-driven />
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory"></property>
+	</bean>
+	<!-- hiberante 3: end -->
+	
+	<!-- spring jdbc template: begin -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
+	<context:component-scan base-package="com.hongkailiu.test.app.db" /> 
+    <!-- spring jdbc template: ends -->
+    
+    <!-- mybatis: begin -->
+    <bean id="mybatisSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+		<property name="dataSource" ref="dataSource" /> 
+		<property name="configLocation" value="classpath:mybatis/mybatis.xml" />
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:mybatis/*-mapper.xml</value>
+				<value>classpath:mybatis/*-resultMap.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="mybatisSqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="mybatisSqlSessionFactory" />
+	</bean>
+	
+	<!-- 自动扫描 mybatis mapper 接口 -->
+	<bean name="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionTemplateBeanName" value="mybatisSqlSessionTemplate"/>
+		<property name= "basePackage" value="com.hongkailiu.test.app.mybatis.mapper" />
+	</bean>	
+	
+	<bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
+		<property name="dataSource" ref="dataSource" /> 
+	</bean>		
+	
+	<!-- 注解式事务管理 -->
+	<tx:annotation-driven transaction-manager="dataSourceTransactionManager" /> 
+    <!-- 自动扫描bean，把作了注解的类转换为bean -->
+    <context:component-scan base-package="com.hongkailiu.test.app.mybatis.service" />
+    <!-- mybatis: end -->
+    
+    <!-- mongodb: begin -->
+    <mongo:mongo host="192.168.0.160" port="27017"/>
+    <mongo:db-factory dbname="mydb" mongo-ref="mongo"/>
+
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+	</bean>
+	<context:component-scan base-package="com.hongkailiu.test.app.mongodb.dao" />
+    <!-- mongodb: end -->
+</beans>
