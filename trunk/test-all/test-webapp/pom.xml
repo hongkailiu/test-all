@@ -19,8 +19,8 @@
 		<spring.security.version>3.2.3.RELEASE</spring.security.version>
 		<jstl.version>1.2</jstl.version>
 		<mysql.connector.version>5.1.30</mysql.connector.version>
-		<!-- <cxf.version>3.0.3</cxf.version> -->
-		<cxf.version>2.6.2</cxf.version>
+		<!-- <cxf.version>2.6.2</cxf.version> -->
+		<cxf.version>2.7.15</cxf.version>
 	</properties>
 	
   <dependencies>
@@ -168,21 +168,48 @@
 		<version>${cxf.version}</version>
 		<scope>test</scope>
 	</dependency>
-
+	
+	<dependency>
+		<groupId>org.codehaus.jackson</groupId>
+		<artifactId>jackson-jaxrs</artifactId>
+		<version>${jackson.version}</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.codehaus.jackson</groupId>
+		<artifactId>jackson-xc</artifactId>
+		<version>${jackson.version}</version>
+		<scope>test</scope>
+	</dependency>
+	
+	<!--  
+	<dependency>
+		<groupId>org.apache.cxf</groupId>
+		<artifactId>cxf-rt-rs-client</artifactId>
+		<version>3.0.0-milestone1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.cxf</groupId>
+		<artifactId>cxf-rt-transports-http-hc</artifactId>
+		<version>${cxf.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>javax.ws.rs</groupId>
+		<artifactId>javax.ws.rs-api</artifactId>
+		<version>2.0-m10</version>
+	</dependency>
 	<dependency>
 		<groupId>javax.jws</groupId>
 		<artifactId>jsr181-api</artifactId>
 		<version>1.0-MR1</version>
 	</dependency>
-	
-	<!-- 
 	<dependency>
 		<groupId>org.springframework.integration</groupId>
 		<artifactId>spring-integration-core</artifactId>
 		<version>2.2.3.RELEASE</version>
 	</dependency>
 	 -->
-	
+
   </dependencies>
   <build>
     <finalName>test-webapp</finalName>
