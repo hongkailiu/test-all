@@ -12,6 +12,11 @@
 		<level value="debug" />
 		<appender-ref ref="Console" />
 	</logger>
+	<logger name="org.eclipse" additivity="false">
+		<level value="error" />
+		<appender-ref ref="Console" />
+	</logger>
+	
 	<root>
 	    <level value="warn" />
 		<appender-ref ref="Console" />

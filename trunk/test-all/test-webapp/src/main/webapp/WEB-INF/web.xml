@@ -9,6 +9,33 @@
 		<url-pattern>*.jpg</url-pattern>
 	</servlet-mapping>
 	
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:spring-security.xml,
+			classpath:spring-database.xml,
+			classpath:cxf-sei.xml
+		</param-value>
+		<!-- <param-value> /WEB-INF/spring-security.xml, /WEB-INF/spring-database.xml 
+			</param-value> -->
+	</context-param>
+	
+	<!-- cxf -->
+	<servlet>
+		<servlet-name>CXFServlet</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CXFServlet</servlet-name>
+		<url-pattern>/services/*</url-pattern>
+	</servlet-mapping>
+
 	<!-- Spring MVC -->
 	<servlet>
 		<servlet-name>mvc-dispatcher</servlet-name>
@@ -21,26 +48,9 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>mvc-dispatcher</servlet-name>
+		<!-- default servlet -->
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>
-			classpath:spring-security.xml,
-			classpath:spring-database.xml
-		</param-value>
-		<!-- 
-		<param-value>
-			/WEB-INF/spring-security.xml,
-			/WEB-INF/spring-database.xml
-		</param-value>
-		 -->
-	</context-param>
 
 	<!-- Spring Security -->
 	<filter>
@@ -50,7 +60,9 @@
 
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/admin*</url-pattern>
+		<!-- conflict with cxf servlet with the following config -->
+		<!-- <url-pattern>/*</url-pattern> -->
 	</filter-mapping>
 
 </web-app>

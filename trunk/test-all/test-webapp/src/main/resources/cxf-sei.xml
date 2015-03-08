@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://cxf.apache.org/jaxws
+	http://cxf.apache.org/schemas/jaxws.xsd
+	http://cxf.apache.org/jaxrs 
+	http://cxf.apache.org/schemas/jaxrs.xsd">
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<!-- <import resource="classpath:META-INF/cxf/cxf-extension-*.xml"/>  -->
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+	<bean class="com.hongkailiu.test.webapp.cxf.service.impl.PersonServiceRestImpl" id="personServiceRest" />
+	<jaxrs:server id="restContainer" address="/rest">
+		<jaxrs:serviceBeans>
+		    <!-- rest service impl -->
+			<ref bean="personServiceRest" />
+		</jaxrs:serviceBeans>
+		<!-- provider to deal with json serde -->
+		<jaxrs:providers>
+            <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+        </jaxrs:providers>
+	</jaxrs:server>
+	
+	<jaxws:endpoint id="mathService"
+		implementor="com.hongkailiu.test.webapp.cxf.service.impl.MathServiceImpl" address="/mathService" />
+</beans>

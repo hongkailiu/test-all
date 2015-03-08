@@ -19,6 +19,8 @@
 		<spring.security.version>3.2.3.RELEASE</spring.security.version>
 		<jstl.version>1.2</jstl.version>
 		<mysql.connector.version>5.1.30</mysql.connector.version>
+		<!-- <cxf.version>3.0.3</cxf.version> -->
+		<cxf.version>2.6.2</cxf.version>
 	</properties>
 	
   <dependencies>
@@ -109,7 +111,7 @@
 			<version>${jstl.version}</version>
 		</dependency>
  
-                <!-- connect to mysql -->
+        <!-- connect to mysql -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -132,7 +134,55 @@
 		<groupId>com.hongkailiu.test</groupId>
 		<artifactId>test-app</artifactId>
 		<version>${project.version}</version>
+		<exclusions>
+			<exclusion>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-nop</artifactId>
+			</exclusion>
+		</exclusions>
 	</dependency>
+
+	<!-- cxf -->
+	<dependency>
+		<groupId>org.apache.cxf</groupId>
+		<artifactId>cxf-rt-frontend-jaxws</artifactId>
+		<version>${cxf.version}</version>
+	</dependency>
+
+	<dependency>
+		<groupId>org.apache.cxf</groupId>
+		<artifactId>cxf-rt-frontend-jaxrs</artifactId>
+		<version>${cxf.version}</version>
+	</dependency>
+
+	<dependency>
+		<groupId>org.apache.cxf</groupId>
+		<artifactId>cxf-rt-transports-http</artifactId>
+		<version>${cxf.version}</version>
+	</dependency>
+
+	<!--  -->
+	<dependency>
+		<groupId>org.apache.cxf</groupId>
+		<artifactId>cxf-rt-transports-http-jetty</artifactId>
+		<version>${cxf.version}</version>
+		<scope>test</scope>
+	</dependency>
+
+	<dependency>
+		<groupId>javax.jws</groupId>
+		<artifactId>jsr181-api</artifactId>
+		<version>1.0-MR1</version>
+	</dependency>
+	
+	<!-- 
+	<dependency>
+		<groupId>org.springframework.integration</groupId>
+		<artifactId>spring-integration-core</artifactId>
+		<version>2.2.3.RELEASE</version>
+	</dependency>
+	 -->
+	
   </dependencies>
   <build>
     <finalName>test-webapp</finalName>
@@ -146,13 +196,16 @@
           </configuration>
         </plugin>
         <plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId>
-				<version>6.1.25</version>
-				<configuration>
-					<scanIntervalSeconds>3</scanIntervalSeconds>
-				</configuration>
-		</plugin>
+  <groupId>org.mortbay.jetty</groupId>
+  <artifactId>jetty-maven-plugin</artifactId>
+  <version>8.1.9.v20130131</version>
+  <configuration>
+    <scanIntervalSeconds>10</scanIntervalSeconds>
+    <webApp>
+      <contextPath>/${project.artifactId}</contextPath>
+    </webApp>
+  </configuration>
+</plugin>
 	<plugin>
 		<groupId>org.apache.tomcat.maven</groupId>
 		<artifactId>tomcat7-maven-plugin</artifactId>
