@@ -2,6 +2,7 @@ package com.hongkailiu.test.app.aaa;
 
 public class D {
 	
+	@SuppressWarnings("unused")
 	private int  b;
 	
 	public void y(){
@@ -11,6 +12,7 @@ public class D {
 	}
 
 	public class InnerD {
+		@SuppressWarnings("unused")
 		private int  a;
 		
 		public int x(){
