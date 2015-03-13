@@ -50,12 +50,15 @@
 		<version>1.10.19</version>
 		<scope>test</scope>
 	</dependency>
+	<!-- testng: 与junit同时存在还是有些问题(webapp): 暂时只使用junit -->
+	<!-- 
 	<dependency>
 		<groupId>org.testng</groupId>
 		<artifactId>testng</artifactId>
 		<version>6.8.21</version>
 		<scope>test</scope>
 	</dependency>
+	 -->
 
     <dependency>
 			<groupId>log4j</groupId>

@@ -21,6 +21,7 @@
 		<mysql.connector.version>5.1.30</mysql.connector.version>
 		<!-- <cxf.version>2.6.2</cxf.version> -->
 		<cxf.version>2.7.15</cxf.version>
+		<servlet.port>10001</servlet.port>
 	</properties>
 	
   <dependencies>
@@ -161,6 +162,19 @@
 		<version>${cxf.version}</version>
 	</dependency>
 
+	<dependency>
+		<groupId>org.apache.cxf</groupId>
+		<artifactId>cxf-rt-ws-security</artifactId>
+		<version>${cxf.version}</version>
+	</dependency>
+	<!-- optional: dependency of cxf security -->
+	<dependency>
+		<groupId>org.apache.ws.security</groupId>
+		<artifactId>wss4j</artifactId>
+		<version>1.6.18</version>
+	</dependency>
+	
+
 	<!--  -->
 	<dependency>
 		<groupId>org.apache.cxf</groupId>
@@ -173,7 +187,6 @@
 		<groupId>org.codehaus.jackson</groupId>
 		<artifactId>jackson-jaxrs</artifactId>
 		<version>${jackson.version}</version>
-		<scope>test</scope>
 	</dependency>
 	<dependency>
 		<groupId>org.codehaus.jackson</groupId>
@@ -231,6 +244,13 @@
     <webApp>
       <contextPath>/${project.artifactId}</contextPath>
     </webApp>
+    <!-- <jettyXml>src/main/resources/jetty.xml</jettyXml> -->
+	<connectors>
+		<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+			<port>${servlet.port}</port>
+			<maxIdleTime>60000</maxIdleTime>
+		</connector>
+	</connectors>
   </configuration>
 </plugin>
 	<plugin>
@@ -261,12 +281,15 @@
 	<plugin>
 		<groupId>org.codehaus.cargo</groupId>
 		<artifactId>cargo-maven2-plugin</artifactId>
-		<version>1.2.0</version>
+		<version>1.4.13</version>
 		<configuration>
+			<container>
+				<containerId>jetty8x</containerId>
+			</container>
 			<type>standalone</type>
 			<configuration>
 				<properties>
-					<cargo.servlet.port>10001</cargo.servlet.port>
+					<cargo.servlet.port>${servlet.port}</cargo.servlet.port>
 				</properties>
 			</configuration>
 		</configuration>

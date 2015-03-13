@@ -8,14 +8,18 @@ import com.hongkailiu.test.webapp.cxf.service.PersonServiceRest;
 import com.hongkailiu.test.webapp.cxf.vo.Person;
 
 //@Repository("personServiceRestImpl")
-public class PersonServiceRestImpl implements PersonServiceRest {
+public class PersonServiceSRestImpl implements PersonServiceRest {
 	
-	static Logger logger = Logger.getLogger(PersonServiceRestImpl.class);
+	static Logger logger = Logger.getLogger(PersonServiceSRestImpl.class);
 
 	@Override
 	public Person create(Person person) {
 		logger.debug("create");
-		return person;
+		Person p = new Person();
+		p.setUsername("a");
+		p.setPassword("b");
+		p.setBirthdate(new Date());
+		return p;
 	}
 
 	@Override
