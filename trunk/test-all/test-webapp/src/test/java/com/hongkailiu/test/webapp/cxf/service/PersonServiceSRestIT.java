@@ -22,7 +22,7 @@ import com.hongkailiu.test.webapp.cxf.vo.Person;
 //@ContextConfiguration("classpath:client-cxf-sei.xml")
 public class PersonServiceSRestIT {
 
-	private final static String BASE_ADDRESS = "http://localhost:10002/test-webapp/services/srest";
+	private final static String BASE_ADDRESS = "http://localhost:10001/test-webapp/services/srest";
 
 	// @Autowired
 	// @Qualifier("restClient")
