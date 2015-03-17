@@ -19,7 +19,7 @@ import com.hongkailiu.test.app.xml.impl.sax.SaxXMLParser;
 public class XMLParserTest {
 	
 	private XMLParser parser;
-	private final static String FILENAME = "file\\staff.xml";
+	private final static String FILENAME = "file/staff.xml";
 	//private final static String FILENAME = "file\\staff-result.xml";
 	private final static Company expectedCompany = new Company();
 	

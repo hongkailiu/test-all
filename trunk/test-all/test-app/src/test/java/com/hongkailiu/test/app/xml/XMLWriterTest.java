@@ -22,7 +22,7 @@ import com.hongkailiu.test.app.xml.impl.sax.SaxXMLWriter;
 public class XMLWriterTest {
 	
 	private XMLWriter writer;
-	private final static String FILENAME = "file\\staff-result.xml";
+	private final static String FILENAME = "file/staff-result.xml";
 	private XMLParser parser;
 	
 	private final static Company expectedCompany = new Company();
