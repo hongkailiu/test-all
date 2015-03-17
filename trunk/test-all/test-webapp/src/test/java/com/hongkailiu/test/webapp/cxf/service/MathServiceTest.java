@@ -77,7 +77,7 @@ public class MathServiceTest {
 	@Test
 	public void test2() {
 
-		String address = "http://localhost:8081/test-webapp/services/mathService/";
+		String address = "http://localhost:10001/test-webapp/services/mathService/";
 		MathServiceImpl endpoint = new MathServiceImpl();
 	    JaxWsServerFactoryBean svrFactory = new JaxWsServerFactoryBean();
 	    svrFactory.setServiceClass(MathService.class);

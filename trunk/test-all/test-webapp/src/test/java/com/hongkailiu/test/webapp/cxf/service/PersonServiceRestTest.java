@@ -34,7 +34,7 @@ public class PersonServiceRestTest {
 //	private final static String ENDPOINT_ADDRESS = "http://localhost:8080/rest";
 //	private final static String WADL_ADDRESS = ENDPOINT_ADDRESS + "?_wadl";
 	
-	private final static String ENDPOINT_ADDRESS = "http://localhost:8080/test-webapp/services/rest";
+	private final static String ENDPOINT_ADDRESS = "http://localhost:10001/test-webapp/services/rest";
 	private final static String WADL_ADDRESS = ENDPOINT_ADDRESS + "?_wadl";
 	private static Server server;
 
