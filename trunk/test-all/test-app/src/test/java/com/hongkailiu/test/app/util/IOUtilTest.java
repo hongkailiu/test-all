@@ -63,7 +63,7 @@ public class IOUtilTest {
 		String result = new String(IOUtil.toByteArray(filename), encoding);
 		assertEquals(content, result);
 		
-		System.out.println("IOUtilTest: testRW(): begin");
+		System.out.println("IOUtilTest: testRW(): end");
 	}
 
 }
