@@ -1,19 +1,27 @@
 package com.hongkailiu.test.testjenkins;
-import hudson.Launcher;
 import hudson.Extension;
-import hudson.util.FormValidation;
-import hudson.model.AbstractBuild;
+import hudson.Launcher;
 import hudson.model.BuildListener;
+import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
-import hudson.tasks.Builder;
+import hudson.model.FreeStyleProject;
 import hudson.tasks.BuildStepDescriptor;
-import net.sf.json.JSONObject;
-import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.StaplerRequest;
-import org.kohsuke.stapler.QueryParameter;
+import hudson.tasks.Builder;
+import hudson.util.FormValidation;
+
+import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
-import java.io.IOException;
+
+import jenkins.model.Jenkins;
+import net.sf.json.JSONObject;
+
+import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.StaplerRequest;
+
+import com.hongkailiu.test.testjenkins.util.JenkinsUtil;
 
 /**
  * Sample {@link Builder}.
@@ -59,10 +67,27 @@ public class HelloWorldBuilder extends Builder {
             listener.getLogger().println("Bonjour, "+name+"!");
         else
             listener.getLogger().println("Hello, "+name+"!");
+        doMyWork();
+        listener.getLogger().println("==========test===========");
         return true;
     }
 
-    // Overridden for better type safety.
+    public String doMyWork() {
+    	final String projectNamePrefix = "myjob-";
+    	Date date = new Date();
+    	String name = projectNamePrefix + date;
+    	try {
+			//FreeStyleProject proj = Jenkins.getInstance().createProject(FreeStyleProject.class, name);
+    		FreeStyleProject project = JenkinsUtil.createFreeStyleProject(name);
+    		JenkinsUtil.buildFreeStyleProject(project);
+			//System.out.println("==========test===========");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	return name;
+	}
+
+	// Overridden for better type safety.
     // If your plugin doesn't really define any property on Descriptor,
     // you don't have to do this.
     @Override
