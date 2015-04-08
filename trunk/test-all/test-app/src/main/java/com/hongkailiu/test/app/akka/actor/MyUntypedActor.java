@@ -16,4 +16,3 @@ public class MyUntypedActor extends UntypedActor {
         log.info("message: "+message);
     }
 }
-ß
