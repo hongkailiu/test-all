@@ -31,10 +31,15 @@ public class IOUtilTest {
 		System.out.println("IOUtilTest: testRead(): begin");
 		String filename = "file\\test.dat";
 		try {
+			File file = new File(filename);
+			if (!file.exists()) {
+				System.out.println("The file not exists: " + file.getAbsolutePath());
+				// return;
+			}
 			System.out.println("read");
 			IOUtil.read(filename);
 			System.out.println("readCommonIO");
-			IOUtil.readCommonIO(filename,"UTF-8");
+			IOUtil.readCommonIO(filename, "UTF-8");
 		} catch (IOException e) {
 			System.out.println("ex message: " + e.getMessage());
 			fail("IO exception occurred when reading file: " + filename);
