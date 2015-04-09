@@ -55,10 +55,12 @@ public class IOUtilTest {
 		System.out.println("user dir: " + SystemUtil.getUserDir());
 		File folder = new File("file");
 		if (!folder.exists()||!folder.isDirectory()){
-			System.out.println("create folder: " + folder.getAbsolutePath());
-			folder.mkdirs();
+			//System.out.println("create folder: " + folder.getAbsolutePath());
+			//folder.mkdirs();
+			fail("file folder does not exist: " + folder.getAbsolutePath());
 		}
-		String filename = "file\\test.dat";
+		String filename = new File("file", "test.dat").getAbsolutePath();
+		//String filename = "file\\test.dat";
 		final String content = "abcd";
 		final String encoding = "UTF-8";
 		
