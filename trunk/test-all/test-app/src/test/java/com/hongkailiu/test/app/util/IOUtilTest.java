@@ -29,7 +29,8 @@ public class IOUtilTest {
 	@Test
 	public void testRead() {
 		System.out.println("IOUtilTest: testRead(): begin");
-		String filename = "file\\test.dat";
+		//String filename = "file\\test.dat";
+		String filename = new File("file", "test.dat").getAbsolutePath();
 		try {
 			File file = new File(filename);
 			if (!file.exists()) {
