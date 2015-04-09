@@ -1,16 +1,12 @@
 package com.hongkailiu.test.app.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import org.junit.*;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class IOUtilTest {
 
@@ -40,6 +36,7 @@ public class IOUtilTest {
 			System.out.println("readCommonIO");
 			IOUtil.readCommonIO(filename,"UTF-8");
 		} catch (IOException e) {
+			System.out.println("ex message: " + e.getMessage());
 			fail("IO exception occurred when reading file: " + filename);
 		}
 		
