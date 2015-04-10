@@ -1,7 +1,9 @@
 package com.hongkailiu.test.app.mockito;
 
+
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -26,6 +28,9 @@ public class MockitoTest {
 
     private final static String NAME = "hongkai";
 
+    private A a;
+    private A spy;
+
     @Before
     public void setUp() throws Exception {
         //mock creation
@@ -33,6 +38,11 @@ public class MockitoTest {
 
         //MockitoAnnotations.initMocks(MockitoTest.class);
         when(p.getName()).thenReturn(NAME);
+
+
+        a = new A();
+        spy = spy(a);
+        p.setA(spy);
     }
 
     @After
@@ -62,6 +72,14 @@ public class MockitoTest {
         assertNotNull(p);
 
         assertEquals(NAME, p.getName());
+    }
+
+    @Test
+    @Ignore
+    public void testSpy() {
+        // not working
+        p.onReceive(null);
+        //verify(spy).tell();
     }
 
 }
