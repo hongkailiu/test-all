@@ -55,8 +55,9 @@ public class JenkinsUtilTest {
 	public void setEnvironmentVariables() throws IOException {
 		EnvironmentVariablesNodeProperty prop = new EnvironmentVariablesNodeProperty();
 		EnvVars envVars = prop.getEnvVars();
-		envVars.put("java.net.preferIPv4Stack", "true");
-		envVars.put("HTTP_PORT", "8099");
+		//envVars.put("sampleEnvVarKey", "sampleEnvVarValue");
+		//envVars.put("java.net.preferIPv4Stack", "true");
+		//envVars.put("HTTP_PORT", "8099");
 
 		j.jenkins.getGlobalNodeProperties().add(prop);
 	}

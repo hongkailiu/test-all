@@ -3,41 +3,36 @@ package com.hongkailiu.test.testjenkins.listener;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.testkit.TestActorRef;
-import com.hongkailiu.test.testjenkins.MyAkkaPluginApi;
+import com.hongkailiu.test.testjenkins.MyMessage;
 import com.hongkailiu.test.testjenkins.actor.ItemListenerActor;
 import com.hongkailiu.test.testjenkins.actor.MyAkkaPluginActor;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by ehongka on 4/9/15.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(MyAkkaPluginApi.class)
-@PowerMockIgnore( {"javax.management.*"})
+
 public class AkkaItemListenerTest {
 
-    @Rule
-    public TemporaryFolder tmpFolder = new TemporaryFolder();
+   // @Rule
+   // public TemporaryFolder tmpFolder = new TemporaryFolder();
 
-    @Mock
-    MyAkkaPluginApi api;
 
     TestActorRef<ItemListenerActor> ref1;
+
     TestActorRef<MyAkkaPluginActor> ref2;
+
+    // spy not working
+    TestActorRef<ItemListenerActor> spy;
+
+    //rule1: never mock the class you want to do testing on
+    //rule2: only mock the dependencies of the class you want to test
+    private AkkaItemListener unitUnderTest;
 
     @Test
     public void testOnCreated() throws Exception {
@@ -47,16 +42,21 @@ public class AkkaItemListenerTest {
     @Test
     public void testOnDeleted() throws Exception {
 
-        mockStatic(MyAkkaPluginApi.class);
-        when(MyAkkaPluginApi.getInstance()).thenReturn(api);
-        when(api.getItemListenerActorRef()).thenReturn(ref1);
-        when(api.getMyAkkaPluginActorRef()).thenReturn(ref2);
+        assertNotNull(unitUnderTest);
+        assertNotNull(unitUnderTest.getItemListenerActorRef());
+        assertNotNull(unitUnderTest.getMyAkkaPluginActorRef());
 
-        AkkaItemListener listener = new AkkaItemListener();
-        listener.onDeleted(null);
+        //doNothing().when(ref1).tell(MyMessage.ITEM_ON_DELETED, ref2);
 
-        verify(api,times(1)).getItemListenerActorRef();
-        verify(api).getMyAkkaPluginActorRef();
+
+        unitUnderTest.onDeleted(null);
+
+        assertEquals(MyMessage.ITEM_ON_DELETED, ref1.underlyingActor().getLastMsg());
+        //Mockito.verify(spy, Mockito.times(1)).tell(MyMessage.ITEM_ON_DELETED, ref2);
+        //verify(spy, times(1)).tell(MyMessage.ITEM_ON_DELETED, ref2);
+
+        //ref1.receive(MyMessage.ITEM_ON_DELETED);
+        //ref2.receive(MyMessage.ITEM_ON_DELETED);
     }
 
     @Test
@@ -78,6 +78,10 @@ public class AkkaItemListenerTest {
 
         Props props2 = Props.create(MyAkkaPluginActor.class);
         ref2 = TestActorRef.create(system, props2, "testB");
+
+        unitUnderTest = new AkkaItemListener();
+        unitUnderTest.setItemListenerActorRef(ref1);
+        unitUnderTest.setMyAkkaPluginActorRef(ref2);
 
     }
 
