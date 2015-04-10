@@ -24,28 +24,37 @@
 
 package com.hongkailiu.test.testjenkins;
 
-import java.io.File;
-import java.io.IOException;
-
-import jenkins.model.Jenkins;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
+import com.hongkailiu.test.testjenkins.util.JenkinsUtil;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.jvnet.hudson.test.JenkinsRule;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+import java.io.File;
+import java.io.IOException;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 
 /**
  *
  * @author hongkai
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(JenkinsUtil.class)
 public class GlobalConfigurationFileFilterTest {
-	
+
+//	@Rule
+//	public JenkinsRule j = new JenkinsRule();
+
 	@Rule
-	public JenkinsRule j = new JenkinsRule();
+	public TemporaryFolder folder= new TemporaryFolder();
 	
 	private File logFolder = null;
 	private File rootFolder = null;
@@ -60,15 +69,18 @@ public class GlobalConfigurationFileFilterTest {
 	
 	@Before
 	public void setUp() throws Exception {
+		mockStatic(JenkinsUtil.class);
+		when(JenkinsUtil.getRoot()).thenReturn(folder.getRoot());
+
 		if (logFolder==null) {
-			logFolder = new File(Jenkins.getInstance().root, "log");
+			logFolder = new File(JenkinsUtil.getRoot(), "log");
 		}
 		if (!logFolder.exists() || !logFolder.isDirectory()) {
 			logFolder.mkdirs();
 		}
 		
 		if (rootFolder==null) {
-			rootFolder = Jenkins.getInstance().root;
+			rootFolder = JenkinsUtil.getRoot();
 		}
 		if (!rootFolder.exists() || !rootFolder.isDirectory()) {
 			rootFolder.mkdirs();

@@ -24,10 +24,10 @@
 
 package com.hongkailiu.test.testjenkins;
 
+import com.hongkailiu.test.testjenkins.util.JenkinsUtil;
+
 import java.io.File;
 import java.io.FileFilter;
-
-import jenkins.model.Jenkins;
 
 /**
  * Filters all files in jenkins' root 
@@ -41,7 +41,7 @@ class GlobalConfigurationFileFilter implements FileFilter {
 
     @Override
     public boolean accept(File file) {
-        return !file.isDirectory() && Jenkins.getInstance().root.getAbsolutePath().equals(file.getParent());
+        return !file.isDirectory() && JenkinsUtil.getRoot().getAbsolutePath().equals(file.getParent());
     }
 
     public static boolean accepts(File file) {

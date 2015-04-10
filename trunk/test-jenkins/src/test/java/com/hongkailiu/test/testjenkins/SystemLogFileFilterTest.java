@@ -24,28 +24,34 @@
 
 package com.hongkailiu.test.testjenkins;
 
-import java.io.File;
-import java.io.IOException;
-
-import jenkins.model.Jenkins;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
+import com.hongkailiu.test.testjenkins.util.JenkinsUtil;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.jvnet.hudson.test.JenkinsRule;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+import java.io.File;
+import java.io.IOException;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 
 /**
  *
- * @author mirko
+ * @author hongkai
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(JenkinsUtil.class)
 public class SystemLogFileFilterTest {
-	
+
 	@Rule
-	public JenkinsRule j = new JenkinsRule();
+	public TemporaryFolder folder= new TemporaryFolder();
 	
 	private File logFolder = null;
 	private File someFolder = null;
@@ -55,21 +61,24 @@ public class SystemLogFileFilterTest {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		
-		
+
+
 	}
 	
 	@Before
 	public void setUp() throws Exception {
+		mockStatic(JenkinsUtil.class);
+		when(JenkinsUtil.getRoot()).thenReturn(folder.getRoot());
+
 		if (logFolder==null) {
-			logFolder = new File(Jenkins.getInstance().root, "log");
+			logFolder = new File(JenkinsUtil.getRoot(), "log");
 		}
 		if (!logFolder.exists() || !logFolder.isDirectory()) {
 			logFolder.mkdirs();
 		}
 		
 		if (someFolder==null) {
-			someFolder = new File(Jenkins.getInstance().root, "some");
+			someFolder = new File(JenkinsUtil.getRoot(), "some");
 		}
 		if (!someFolder.exists() || !someFolder.isDirectory()) {
 			someFolder.mkdirs();
@@ -77,6 +86,7 @@ public class SystemLogFileFilterTest {
 		
 		file1 = new File(logFolder, "test1.xml");
 		file2 = new File(someFolder, "test2.xml");
+
 	}
 
     /**

@@ -1,11 +1,11 @@
 package com.hongkailiu.test.testjenkins.util;
 
 import hudson.model.FreeStyleProject;
+import jenkins.model.Jenkins;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
-import jenkins.model.Jenkins;
 
 public class JenkinsUtil {
 
@@ -47,6 +47,10 @@ public class JenkinsUtil {
 		if (freeStyleProject!=null){
 			freeStyleProject.delete();
 		}
+	}
+
+	public static File getRoot(){
+		return Jenkins.getInstance().root;
 	}
 
 }

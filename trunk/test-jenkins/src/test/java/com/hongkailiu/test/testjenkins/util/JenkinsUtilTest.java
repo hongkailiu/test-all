@@ -1,31 +1,34 @@
 package com.hongkailiu.test.testjenkins.util;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import hudson.EnvVars;
 import hudson.model.FreeStyleBuild;
-import hudson.model.TopLevelItem;
 import hudson.model.FreeStyleProject;
+import hudson.model.TopLevelItem;
 import hudson.plugins.collabnet.util.BuildCompleteListener;
+import hudson.slaves.EnvironmentVariablesNodeProperty;
+import jenkins.model.Jenkins;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.*;
+import org.jvnet.hudson.test.JenkinsRule;
+import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.util.Date;
 
-import jenkins.model.Jenkins;
+import static org.junit.Assert.*;
 
-import org.apache.commons.lang3.StringUtils;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.jvnet.hudson.test.JenkinsRule;
-import org.xml.sax.SAXException;
-
+/**
+ * The following message occurs if testing is done in Mac.
+ * The test is successful though.
+ * WARNING: UDP handling problem
+ java.net.SocketException: Can't assign requested address
+ */
 public class JenkinsUtilTest {
+
+	@Rule
+	public JenkinsRule j = new JenkinsRule();
+
+	private FreeStyleProject project;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -37,6 +40,8 @@ public class JenkinsUtilTest {
 
 	@Before
 	public void setUp() throws Exception {
+		setEnvironmentVariables();
+
 	}
 
 	@After
@@ -47,10 +52,15 @@ public class JenkinsUtilTest {
 		project=null;
 	}
 
-	@Rule
-	public JenkinsRule j = new JenkinsRule();
-	
-	private FreeStyleProject project;
+	public void setEnvironmentVariables() throws IOException {
+		EnvironmentVariablesNodeProperty prop = new EnvironmentVariablesNodeProperty();
+		EnvVars envVars = prop.getEnvVars();
+		envVars.put("java.net.preferIPv4Stack", "true");
+		envVars.put("HTTP_PORT", "8099");
+
+		j.jenkins.getGlobalNodeProperties().add(prop);
+	}
+
 
 	@Test
 	public void testCreateFreeStyleProject() throws IOException, SAXException {
@@ -91,6 +101,7 @@ public class JenkinsUtilTest {
 		// TODO should be callbacks available: RunListen?
 		//System.out.println("waiting 10 sec...");
 		//Thread.sleep(10*1000);
+		@SuppressWarnings("unchecked")
 		BuildCompleteListener listener = new BuildCompleteListener(FreeStyleProject.class, project);
 		listener.waitForBuildToComplete(10*1000);
 		
@@ -130,4 +141,9 @@ public class JenkinsUtilTest {
 		assertFalse(response2.contains(name));
 	}
 
+	@Test
+	public void testGetRoot() throws Exception {
+		// TODO
+		assertNotNull(JenkinsUtil.getRoot());
+	}
 }

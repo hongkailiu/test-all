@@ -24,10 +24,10 @@
 
 package com.hongkailiu.test.testjenkins;
 
+import com.hongkailiu.test.testjenkins.util.JenkinsUtil;
+
 import java.io.File;
 import java.io.FileFilter;
-
-import jenkins.model.Jenkins;
 
 /**
  * Filters all files in jenkins' log folder 
@@ -44,7 +44,7 @@ class SystemLogFileFilter implements FileFilter {
     @Override
     public boolean accept(File file) {
     	//return LOG_FOLDER_NAME.equals(file.getParentFile().getName());
-        return !file.isDirectory() && new File(Jenkins.getInstance().root.getPath(),LOG_FOLDER_NAME).getAbsolutePath().equals(file.getParent());
+        return !file.isDirectory() && new File(JenkinsUtil.getRoot().getPath(),LOG_FOLDER_NAME).getAbsolutePath().equals(file.getParent());
     }
 
     public static boolean accepts(File file) {
