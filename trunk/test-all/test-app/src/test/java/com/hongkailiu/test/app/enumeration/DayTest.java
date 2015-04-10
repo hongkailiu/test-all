@@ -1,12 +1,11 @@
 package com.hongkailiu.test.app.enumeration;
 
-import static org.junit.Assert.assertEquals;
-
+import com.hongkailiu.test.app.gson.TestGson;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.hongkailiu.test.app.gson.TestGson;
+import static org.junit.Assert.assertEquals;
 
 public class DayTest {
 	
@@ -48,6 +47,11 @@ public class DayTest {
                 System.out.println("Midweek days are so-so.");
                 break;
         }
+    }
+
+    @Test
+    public void testToString() {
+       System.out.print("aaa: " + Day.FRIDAY);
     }
 
 }
