@@ -34,4 +34,7 @@ public class MyAkkaPluginApi {
 
     @Getter
     private final ActorRef buildListenerActorRef = MyAkkaPlugin.getBuildListenerActorRef();
+
+    @Getter
+    private final ActorRef clusterActorRef = MyAkkaPlugin.getClusterActorRef();
 }

@@ -20,4 +20,5 @@ public class MyMessage {
 
     public final static String BUILD_FINISHED = "buildFinished";
     public final static String BUILD_STARTED = "buildStarted";
+
 }

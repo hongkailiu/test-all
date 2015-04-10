@@ -3,6 +3,7 @@ package com.hongkailiu.test.testjenkins.listener;
 import akka.actor.ActorRef;
 import com.hongkailiu.test.testjenkins.MyAkkaPluginApi;
 import com.hongkailiu.test.testjenkins.MyMessage;
+import com.hongkailiu.test.testjenkins.message.ForwardedMessage;
 import hudson.Extension;
 import hudson.model.Item;
 import hudson.model.listeners.ItemListener;
@@ -22,6 +23,10 @@ import lombok.extern.log4j.Log4j2;
 
     @Getter
     @Setter
+    private ActorRef clusterActorRef = MyAkkaPluginApi.getInstance().getClusterActorRef();
+
+    @Getter
+    @Setter
     private ActorRef myAkkaPluginActorRef = MyAkkaPluginApi.getInstance().getMyAkkaPluginActorRef();
 
     @Override
@@ -35,6 +40,7 @@ import lombok.extern.log4j.Log4j2;
     public void onDeleted(Item item) {
         super.onDeleted(item);
         itemListenerActorRef.tell(MyMessage.ITEM_ON_DELETED, myAkkaPluginActorRef);
+        clusterActorRef.tell(new ForwardedMessage(MyMessage.ITEM_ON_DELETED), myAkkaPluginActorRef);
     }
 
     @Override
