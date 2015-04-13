@@ -113,7 +113,7 @@ import java.util.List;
         ByteArrayInputStream bis = new ByteArrayInputStream(message);
         ObjectInput in = new ObjectInputStream(bis);
         String s = (String) in.readObject();
-        log.info("==================", s);
+        log.info("==================" + s);
 
     }
 }
