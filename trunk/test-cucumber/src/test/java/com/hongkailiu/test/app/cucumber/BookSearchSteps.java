@@ -1,6 +1,8 @@
 package com.hongkailiu.test.app.cucumber;
 
 
+import com.hongkailiu.test.app.cucumber.simple.Book;
+import com.hongkailiu.test.app.cucumber.simple.Library;
 import cucumber.api.Format;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;

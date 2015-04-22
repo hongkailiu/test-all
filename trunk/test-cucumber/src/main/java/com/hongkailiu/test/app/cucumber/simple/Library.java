@@ -1,4 +1,6 @@
-package com.hongkailiu.test.app.cucumber;
+package com.hongkailiu.test.app.cucumber.simple;
+
+import com.hongkailiu.test.app.cucumber.simple.Book;
 
 import java.util.*;
 

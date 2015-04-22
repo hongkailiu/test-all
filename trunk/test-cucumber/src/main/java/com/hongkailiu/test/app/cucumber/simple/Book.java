@@ -1,4 +1,4 @@
-package com.hongkailiu.test.app.cucumber;
+package com.hongkailiu.test.app.cucumber.simple;
 
 import lombok.Getter;
 import lombok.Setter;
