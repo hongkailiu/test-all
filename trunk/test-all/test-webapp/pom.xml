@@ -295,8 +295,9 @@
 			<container>
 				<containerId>jetty8x</containerId>
 			</container>
-			<type>standalone</type>
+			<!-- <type>standalone</type> -->
 			<configuration>
+				<type>standalone</type>
 				<properties>
 					<cargo.servlet.port>${servlet.port}</cargo.servlet.port>
 				</properties>
