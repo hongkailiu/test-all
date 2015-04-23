@@ -1,5 +1,6 @@
 package com.hongkailiu.test.app.mail;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -7,7 +8,7 @@ import org.junit.Test;
  */
 public class SenderTest {
 
-    @Test public void testMain() throws Exception {
+    @Test @Ignore public void testMain() throws Exception {
 
             System.out.println("bbb");
             //Sender.send("liutestlt@sina.com", "leadtone123", "liutestlt@sina.com", "", "title", "test");
