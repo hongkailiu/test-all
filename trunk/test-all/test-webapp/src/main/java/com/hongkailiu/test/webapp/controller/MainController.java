@@ -13,86 +13,83 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 /**
- * 
  * ref: http://www.mkyong.com/spring-security/spring-security-form-login-using-database/
  * spring security3: example tested
- * @author Hongkai Liu
  *
+ * @author Hongkai Liu
  */
-@Controller
-public class MainController {
-	
-	private static final Logger logger = Logger.getLogger(MainController.class);
-	
-	@RequestMapping(value = { "/index"}, method = RequestMethod.GET)
-	public ModelAndView index() {
-		logger.debug("==============index page==================");
-		ModelAndView model = new ModelAndView();
-		model.setViewName("index");
-		return model;
+@Controller public class MainController {
 
-	}
+    private static final Logger logger = Logger.getLogger(MainController.class);
 
-	@RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
-	public ModelAndView defaultPage() {
-		logger.debug("==============default page==================");
-		ModelAndView model = new ModelAndView();
-		model.addObject("title", "Spring Security Login Form - Database Authentication");
-		model.addObject("message", "This is default page!");
-		model.setViewName("hello");
-		return model;
+    @RequestMapping(value = {"/index"}, method = RequestMethod.GET) public ModelAndView index() {
+        logger.debug("==============index page==================");
+        ModelAndView model = new ModelAndView();
+        model.setViewName("index");
+        return model;
 
-	}
+    }
 
-	@RequestMapping(value = "/admin**", method = RequestMethod.GET)
-	public ModelAndView adminPage() {
+    @RequestMapping(value = {"/", "/welcome**"}, method = RequestMethod.GET)
+    public ModelAndView defaultPage() {
+        logger.debug("==============default page==================");
+        ModelAndView model = new ModelAndView();
+        model.addObject("title", "Spring Security Login Form - Database Authentication");
+        model.addObject("message", "This is default page!");
+        model.setViewName("hello");
+        return model;
 
-		ModelAndView model = new ModelAndView();
-		model.addObject("title", "Spring Security Login Form - Database Authentication");
-		model.addObject("message", "This page is for ROLE_ADMIN only!");
-		model.setViewName("admin");
+    }
 
-		return model;
+    @RequestMapping(value = "/admin**", method = RequestMethod.GET)
+    public ModelAndView adminPage() {
 
-	}
+        ModelAndView model = new ModelAndView();
+        model.addObject("title", "Spring Security Login Form - Database Authentication");
+        model.addObject("message", "This page is for ROLE_ADMIN only!");
+        model.setViewName("admin");
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "logout", required = false) String logout) {
+        return model;
 
-		ModelAndView model = new ModelAndView();
-		if (error != null) {
-			model.addObject("error", "Invalid username and password!");
-		}
+    }
 
-		if (logout != null) {
-			model.addObject("msg", "You've been logged out successfully.");
-		}
-		model.setViewName("login");
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ModelAndView login(@RequestParam(value = "error", required = false) String error,
+        @RequestParam(value = "logout", required = false) String logout) {
 
-		return model;
+        ModelAndView model = new ModelAndView();
+        if (error != null) {
+            model.addObject("error", "Invalid username and password!");
+        }
 
-	}
-	
-	//for 403 access denied page
-	@RequestMapping(value = "/403", method = RequestMethod.GET)
-	public ModelAndView accesssDenied() {
+        if (logout != null) {
+            model.addObject("msg", "You've been logged out successfully.");
+        }
+        model.setViewName("login");
 
-		ModelAndView model = new ModelAndView();
-		
-		//check if user is login
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (!(auth instanceof AnonymousAuthenticationToken)) {
-			UserDetails userDetail = (UserDetails) auth.getPrincipal();
-			System.out.println(userDetail);
-		
-			model.addObject("username", userDetail.getUsername());
-			
-		}
-		
-		model.setViewName("403");
-		return model;
+        return model;
 
-	}
+    }
+
+    //for 403 access denied page
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public ModelAndView accesssDenied() {
+
+        ModelAndView model = new ModelAndView();
+
+        //check if user is login
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            UserDetails userDetail = (UserDetails) auth.getPrincipal();
+            System.out.println(userDetail);
+
+            model.addObject("username", userDetail.getUsername());
+
+        }
+
+        model.setViewName("403");
+        return model;
+
+    }
 
 }

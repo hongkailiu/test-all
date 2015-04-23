@@ -1,20 +1,16 @@
 package com.hongkailiu.test.webapp.proxy;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
+import com.hongkailiu.test.webapp.response.json.TVSeriesJsonResult;
 import org.springframework.stereotype.Component;
 
-import com.hongkailiu.test.webapp.response.json.TVSeriesJsonResult;
+import javax.annotation.Resource;
+import java.util.List;
 
-@Component
-public class DataProxy {
+@Component public class DataProxy {
 
-	@Resource(name="tvSeriesServiceImpl")
-	TVSeriesService tvSeriesService;
-	
-	public List<TVSeriesJsonResult> getAllTVSeries() {
-		return tvSeriesService.getAllTVSeries();
-	}
+    @Resource(name = "tvSeriesServiceImpl") TVSeriesService tvSeriesService;
+
+    public List<TVSeriesJsonResult> getAllTVSeries() {
+        return tvSeriesService.getAllTVSeries();
+    }
 }
