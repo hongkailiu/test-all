@@ -1,16 +1,15 @@
 package com.hongkailiu.test.app.tree.printer;
 
+import com.hongkailiu.test.app.tree.other.SimpleTree;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.hongkailiu.test.app.tree.other.SimpleTree;
-
 /**
- * 
  * ref. http://stackoverflow.com/questions/4965335/how-to-print-binary-tree-diagram
- * @author Liu
  *
+ * @author Liu
  */
 class BinaryTreePrinter {
 
@@ -20,7 +19,8 @@ class BinaryTreePrinter {
         printNodeInternal(Collections.singletonList(root), 1, maxLevel);
     }
 
-    private static <T extends Comparable<T>> void printNodeInternal(List<SimpleTree<T>> nodes, int level, int maxLevel) {
+    private static <T extends Comparable<T>> void printNodeInternal(List<SimpleTree<T>> nodes,
+        int level, int maxLevel) {
         if (nodes.isEmpty() || BinaryTreePrinter.isAllElementsNull(nodes))
             return;
 
@@ -85,8 +85,8 @@ class BinaryTreePrinter {
         if (node == null)
             return 0;
 
-        return Math.max(BinaryTreePrinter.maxLevel(node.getLeft()), BinaryTreePrinter.maxLevel(node.getRight()
-        		)) + 1;
+        return Math.max(BinaryTreePrinter.maxLevel(node.getLeft()),
+            BinaryTreePrinter.maxLevel(node.getRight())) + 1;
     }
 
     private static <T> boolean isAllElementsNull(List<T> list) {

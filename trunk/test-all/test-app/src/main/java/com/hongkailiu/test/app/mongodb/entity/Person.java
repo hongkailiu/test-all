@@ -5,54 +5,50 @@ import org.springframework.data.annotation.Id;
 
 public class Person {
 
-	@Id
-	private String id;
+    @Id private String id;
 
-	private String name;
+    private String name;
 
-	private String country;
+    private String country;
 
-	public String getId() {
-		return id;
-	}
+    public Person(String name, String country) {
+        super();
+        this.name = name;
+        this.country = country;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public Person() {
+        super();
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getCountry() {
-		return country;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@Override
-	public String toString() {
-		 return String.format(
-	                "Person[id=%s, name='%s', country='%s']",
-	                id, name, country);
-	}
+    public String getCountry() {
+        return country;
+    }
 
-	public Person(String name, String country) {
-		super();
-		this.name = name;
-		this.country = country;
-	}
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
-	public Person() {
-		super();
-	}
+    @Override public String toString() {
+        return String.format("Person[id=%s, name='%s', country='%s']", id, name, country);
+    }
 
-	
+
 
 }

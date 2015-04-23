@@ -17,8 +17,7 @@ public class Consumer {
 
 
     //setter method injector
-    @Inject
-    public void setService(MessageService svc) {
+    @Inject public void setService(MessageService svc) {
         this.service = svc;
     }
 

@@ -7,13 +7,12 @@ package com.hongkailiu.test.app.lombok;
 import lombok.Data;
 import lombok.extern.log4j.Log4j;
 
-@Log4j
-@Data public class LombokPerson {
+@Log4j @Data public class LombokPerson {
 
     private String name;
     private long id;
 
-    public void write2Log(String message){
+    public void write2Log(String message) {
         log.info(message);
     }
 }

@@ -16,8 +16,8 @@ public class MyIOUnit {
         StringBuilder builder = new StringBuilder();
 
         int data = input.read();
-        while(data != -1){
-            if(((char)data) != ','){
+        while (data != -1) {
+            if (((char) data) != ',') {
                 builder.append((char) data);
             } else {
                 this.tokens.add(builder.toString().trim());
@@ -29,8 +29,8 @@ public class MyIOUnit {
     }
 
     public void write(OutputStream output) throws IOException {
-        for(int i=0; i<tokens.size(); i++){
-            if(i>0){
+        for (int i = 0; i < tokens.size(); i++) {
+            if (i > 0) {
                 output.write(',');
             }
             output.write(tokens.get(i).getBytes());

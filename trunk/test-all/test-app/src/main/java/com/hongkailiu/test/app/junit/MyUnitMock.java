@@ -7,19 +7,17 @@ public class MyUnitMock extends MyUnit {
     protected boolean callOneCalled = false;
     protected boolean callTwoCalled = false;
 
-    @Override
-    protected void callOne() {
+    public MyUnitMock(MyDependency dep) {
+        super(dep);
+    }
+
+    @Override protected void callOne() {
         this.callOneCalled = true;
         super.callOne();
     }
 
-    @Override
-    protected void callTwo() {
+    @Override protected void callTwo() {
         this.callTwoCalled = true;
         super.callTwo();
-    }
-
-    public MyUnitMock(MyDependency dep) {
-        super(dep);
     }
 }

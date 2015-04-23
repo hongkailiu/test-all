@@ -11,8 +11,7 @@ import akka.event.LoggingAdapter;
 public class MyUntypedActor extends UntypedActor {
     LoggingAdapter log = Logging.getLogger(getContext().system(), this);
 
-    @Override
-    public void onReceive(Object message) throws Exception {
-        log.info("message: "+message);
+    @Override public void onReceive(Object message) throws Exception {
+        log.info("message: " + message);
     }
 }

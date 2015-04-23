@@ -3,66 +3,65 @@ package com.hongkailiu.test.app.db;
 
 public class Person {
 
-	
-	private int id;
 
-	private String name;
+    private int id;
 
-	private String country;
+    private String name;
 
-	public int getId() {
-		return id;
-	}
+    private String country;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public Person(int id, String name, String country) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.country = country;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Person() {
+        super();
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getCountry() {
-		return country;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    public String getName() {
+        return name;
+    }
 
-	@Override
-	public String toString() {
-		// StringBuilder sb = new StringBuilder();
+    public void setName(String name) {
+        this.name = name;
+    }
 
-		// if (certificates!=null) {
-		// sb.append("[");
-		// for (Certificate c : certificates) {
-		// sb.append(c + ",");
-		// }
-		// sb.append("]");
-		// } else {
-		// sb.append("null");
-		// }
-		// return
-		// "id="+id+", name="+name+", country="+country+", certificates="+sb.toString();
-		return "id=" + id + ", name=" + name + ", country=" + country;
-	}
+    public String getCountry() {
+        return country;
+    }
 
-	public Person(int id, String name, String country) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.country = country;
-	}
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
-	public Person() {
-		super();
-	}
+    @Override public String toString() {
+        // StringBuilder sb = new StringBuilder();
 
-	
+        // if (certificates!=null) {
+        // sb.append("[");
+        // for (Certificate c : certificates) {
+        // sb.append(c + ",");
+        // }
+        // sb.append("]");
+        // } else {
+        // sb.append("null");
+        // }
+        // return
+        // "id="+id+", name="+name+", country="+country+", certificates="+sb.toString();
+        return "id=" + id + ", name=" + name + ", country=" + country;
+    }
+
+
 
 }

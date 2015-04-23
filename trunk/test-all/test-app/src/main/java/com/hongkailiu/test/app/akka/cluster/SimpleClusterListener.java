@@ -3,13 +3,12 @@ package com.hongkailiu.test.app.akka.cluster;
 import akka.actor.UntypedActor;
 import akka.cluster.Cluster;
 import akka.cluster.ClusterEvent;
+import akka.cluster.ClusterEvent.MemberEvent;
+import akka.cluster.ClusterEvent.MemberRemoved;
+import akka.cluster.ClusterEvent.MemberUp;
+import akka.cluster.ClusterEvent.UnreachableMember;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
-
-import akka.cluster.ClusterEvent.MemberEvent;
-import akka.cluster.ClusterEvent.MemberUp;
-import akka.cluster.ClusterEvent.MemberRemoved;
-import akka.cluster.ClusterEvent.UnreachableMember;
 
 /**
  * Created by ehongka on 4/10/15.
@@ -20,22 +19,19 @@ public class SimpleClusterListener extends UntypedActor {
     Cluster cluster = Cluster.get(getContext().system());
 
     //subscribe to cluster changes
-    @Override
-    public void preStart() {
+    @Override public void preStart() {
         //#subscribe
-        cluster.subscribe(getSelf(), ClusterEvent.initialStateAsEvents(),
-                MemberEvent.class, UnreachableMember.class);
+        cluster.subscribe(getSelf(), ClusterEvent.initialStateAsEvents(), MemberEvent.class,
+            UnreachableMember.class);
         //#subscribe
     }
 
     //re-subscribe when restart
-    @Override
-    public void postStop() {
+    @Override public void postStop() {
         cluster.unsubscribe(getSelf());
     }
 
-    @Override
-    public void onReceive(Object message) {
+    @Override public void onReceive(Object message) {
         if (message instanceof MemberUp) {
             MemberUp mUp = (MemberUp) message;
             log.info("Member is Up: {}", mUp.member());

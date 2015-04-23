@@ -1,22 +1,20 @@
 package com.hongkailiu.test.app.util;
 
+import org.apache.log4j.Logger;
+
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import org.apache.log4j.Logger;
-
 /**
- * 
  * ref. https://github.com/vallourec/zebra/blob/master/src/main/java/com/vallourec/zebra/core/utils/Reflections.java
- * 
- * @author Liu
  *
+ * @author Liu
  */
 public class ReflectionUtil {
-	
-	static Logger logger = Logger.getLogger(ReflectionUtil.class);
-	
-	/**
+
+    static Logger logger = Logger.getLogger(ReflectionUtil.class);
+
+    /**
      * 通过反射, 获得Class定义中声明的泛型参数的类型, 注意泛型必须定义在父类处
      * 如无法找到, 返回Object.class.
      * eg.
@@ -25,43 +23,45 @@ public class ReflectionUtil {
      * @param clazz The class to introspect
      * @return the first generic declaration, or Object.class if cannot be determined
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static <T> Class<T> getClassGenricType(final Class clazz) {
-            return getClassGenricType(clazz, 0);
+    @SuppressWarnings({"unchecked", "rawtypes"}) public static <T> Class<T> getClassGenricType(
+        final Class clazz) {
+        return getClassGenricType(clazz, 0);
     }
 
     /**
      * 通过反射, 获得Class定义中声明的父类的泛型参数的类型.
      * 如无法找到, 返回Object.class.
-     * 
+     * <p>
      * 如public UserDao extends HibernateDao<User,Long>
      *
      * @param clazz clazz The class to introspect
      * @param index the Index of the generic ddeclaration,start from 0.
      * @return the index generic declaration, or Object.class if cannot be determined
      */
-    @SuppressWarnings("rawtypes")
-	public static Class getClassGenricType(final Class clazz, final int index) {
+    @SuppressWarnings("rawtypes") public static Class getClassGenricType(final Class clazz,
+        final int index) {
 
-            Type genType = clazz.getGenericSuperclass();
+        Type genType = clazz.getGenericSuperclass();
 
-            if (!(genType instanceof ParameterizedType)) {
-                    logger.warn(clazz.getSimpleName() + "'s superclass not ParameterizedType");
-                    return Object.class;
-            }
+        if (!(genType instanceof ParameterizedType)) {
+            logger.warn(clazz.getSimpleName() + "'s superclass not ParameterizedType");
+            return Object.class;
+        }
 
-            Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
+        Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
 
-            if (index >= params.length || index < 0) {
-                    logger.warn("Index: " + index + ", Size of " + clazz.getSimpleName() + "'s Parameterized Type: "
-                                    + params.length);
-                    return Object.class;
-            }
-            if (!(params[index] instanceof Class)) {
-                    logger.warn(clazz.getSimpleName() + " not set the actual class on superclass generic parameter");
-                    return Object.class;
-            }
+        if (index >= params.length || index < 0) {
+            logger.warn(
+                "Index: " + index + ", Size of " + clazz.getSimpleName() + "'s Parameterized Type: "
+                    + params.length);
+            return Object.class;
+        }
+        if (!(params[index] instanceof Class)) {
+            logger.warn(clazz.getSimpleName()
+                + " not set the actual class on superclass generic parameter");
+            return Object.class;
+        }
 
-            return (Class) params[index];
+        return (Class) params[index];
     }
 }
