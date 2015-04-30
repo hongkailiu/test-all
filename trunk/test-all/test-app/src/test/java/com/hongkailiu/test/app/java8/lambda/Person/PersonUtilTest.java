@@ -76,7 +76,7 @@ public class PersonUtilTest {
 
     /**
      * ref. https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html
-     * 
+     *
      * @throws Exception
      */
     @Test public void testCompareByAge2() throws Exception {
