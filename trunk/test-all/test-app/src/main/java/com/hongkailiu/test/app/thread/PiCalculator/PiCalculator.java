@@ -23,7 +23,7 @@ public class PiCalculator implements Callable<Double> {
                 nextVal = currVal + (1 / denominator);
             }
         }
-
-        return currVal * 4;
+        Double d = Double.valueOf(currVal * 4);
+        return d;
     }
 }
