@@ -1,6 +1,7 @@
 package com.hongkailiu.test.app.java7.nio;
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -10,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by hongkailiu on 2015-04-30.
  */
-public class MyWatcher implements Callable<Object> {
+@Log4j public class MyWatcher implements Callable<Object> {
 
     private Path path;
     @Setter private volatile boolean stopFlag = false;
@@ -19,7 +20,7 @@ public class MyWatcher implements Callable<Object> {
         this.path = path;
     }
 
-    @Override public Object call() throws Exception {
+    private void sanityCheck(){
         // Sanity check - Check if path is a folder
         try {
             Boolean isFolder =
@@ -28,11 +29,14 @@ public class MyWatcher implements Callable<Object> {
                 throw new IllegalArgumentException("Path: " + path + " is not a folder");
             }
         } catch (IOException ioe) {
-            // Folder does not exists
-            ioe.printStackTrace();
+            log.error(ioe);
         }
+    }
 
-        System.out.println("Watching path: " + path);
+    @Override public Object call() throws Exception {
+        sanityCheck();
+
+        log.info("Watching path: " + path);
 
         // We obtain the file system of the Path
         FileSystem fs = path.getFileSystem();
@@ -49,7 +53,7 @@ public class MyWatcher implements Callable<Object> {
             while (!stopFlag) {
                 //key = service.take();
                 key = service.poll(1, TimeUnit.SECONDS);
-                System.out.println("stopFlag: " + stopFlag);
+                log.info("stopFlag: " + stopFlag);
                 // Dequeueing events
                 if (key!=null) {
                     WatchEvent.Kind<?> kind = null;
@@ -62,7 +66,7 @@ public class MyWatcher implements Callable<Object> {
                             // A new Path was created
                             Path newPath = ((WatchEvent<Path>) watchEvent).context();
                             // Output
-                            System.out.println("New path created: " + newPath);
+                            log.info("New path created: " + newPath);
                         }
                     }
 
@@ -73,10 +77,8 @@ public class MyWatcher implements Callable<Object> {
 
             }
 
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } catch (InterruptedException ie) {
-            ie.printStackTrace();
+        } catch (IOException | InterruptedException e) {
+            log.error(e);
         }
         return null;
     }

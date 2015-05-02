@@ -3,6 +3,7 @@ package com.hongkailiu.test.app.xml.impl.sax;
 import com.hongkailiu.test.app.xml.XMLParser;
 import com.hongkailiu.test.app.xml.entity.Company;
 import com.hongkailiu.test.app.xml.entity.Staff;
+import lombok.extern.log4j.Log4j;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -18,7 +19,7 @@ import java.util.HashSet;
  *
  * @author Liu
  */
-public class SaxXMLParser implements XMLParser {
+@Log4j public class SaxXMLParser implements XMLParser {
 
     @Override public Company parseXML2Company(String filename) {
         Company result = null;
@@ -30,7 +31,7 @@ public class SaxXMLParser implements XMLParser {
             saxParser.parse(filename, handler);
             result = handler.company;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return result;
     }
@@ -54,7 +55,7 @@ public class SaxXMLParser implements XMLParser {
         public void startElement(String uri, String localName, String qName, Attributes attributes)
             throws SAXException {
 
-            System.out.println("Start Element :" + qName);
+            log.info("Start Element :" + qName);
             currentQName = qName;
             if (qName.equals("company")) {
                 if (company == null) {

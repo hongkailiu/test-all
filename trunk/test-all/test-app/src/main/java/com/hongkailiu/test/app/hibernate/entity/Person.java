@@ -4,19 +4,21 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Set;
 
 
-@Entity @Table(name = "Person") public class Person implements Serializable {
+@Entity @Table(name = "Person") public class Person {//implements Serializable {
 
-    private static final long serialVersionUID = 3233110155779286919L;
+    //private static final long serialVersionUID = 3233110155779286919L;
 
     @Id @Column(name = "id") @GeneratedValue(strategy = GenerationType.IDENTITY) private int id;
 
     private String name;
 
     private String country;
+
+    // sonar false positive
+    // http://sonarqube.15.x6.nabble.com/Serializable-classes-with-Java-Collections-get-either-S1319-or-S1948-td5030527.html
     // 如果不用eager策略，需要在DAO层保留session，也就是说不执行close操作
     // 生产环境下可以考虑手动实现certificates集合的赋值，在service层，调用CertificateDAO
     // ref. https://docs.jboss.org/hibernate/orm/3.3/reference/en/html/performance.html

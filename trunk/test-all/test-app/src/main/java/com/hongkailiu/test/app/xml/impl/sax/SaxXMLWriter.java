@@ -3,6 +3,7 @@ package com.hongkailiu.test.app.xml.impl.sax;
 import com.hongkailiu.test.app.xml.XMLWriter;
 import com.hongkailiu.test.app.xml.entity.Company;
 import com.hongkailiu.test.app.xml.entity.Staff;
+import lombok.extern.log4j.Log4j;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
@@ -23,7 +24,7 @@ import java.util.Set;
  *
  * @author Liu
  */
-public class SaxXMLWriter implements XMLWriter {
+@Log4j public class SaxXMLWriter implements XMLWriter {
 
     @Override public void writeCompany2File(String filename, Company company) {
         if (company == null) {
@@ -89,14 +90,10 @@ public class SaxXMLWriter implements XMLWriter {
             //因为没有appendChild等等添加子元素的方法，sax提供的是构造在startElement()和endElement()区间内的标签为包含的节点的父节点
             transformerHandle.endDocument();
 
-            System.out.println("xml文档生成成功！");
+            log.info("xml文档生成成功！");
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException | TransformerConfigurationException | SAXException e) {
+           log.error(e);
         }
 
     }

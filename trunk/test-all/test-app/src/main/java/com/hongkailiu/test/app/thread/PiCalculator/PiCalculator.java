@@ -1,19 +1,33 @@
 package com.hongkailiu.test.app.thread.PiCalculator;
 
+import lombok.extern.log4j.Log4j;
+
 import java.util.concurrent.Callable;
 
 /**
  * Created by hongkailiu on 2015-04-30.
  */
-public class PiCalculator implements Callable<Double> {
+@Log4j public class PiCalculator implements Callable<Double> {
     @Override public Double call() throws Exception {
 
-        System.out.println("PiCalculator thread id: " + Thread.currentThread().getId());
+        log.info("PiCalculator thread id: " + Thread.currentThread().getId());
         double currVal = 1.0;
         double nextVal = 0.0;
         double denominator = 1.0;
 
-        for(int i = 0;
+        int i=0;
+        while (Math.abs(nextVal - currVal) > 0.000000001d) {
+            currVal = nextVal;
+            if(i % 2 == 1) {
+                nextVal = currVal - (1 / denominator);
+            } else {
+                nextVal = currVal + (1 / denominator);
+            }
+            denominator += 2.0;
+            i++;
+        }
+
+/*        for(int i = 0;
             Math.abs(nextVal - currVal) > 0.000000001d;
             denominator += 2.0, i++) {
             currVal = nextVal;
@@ -22,8 +36,7 @@ public class PiCalculator implements Callable<Double> {
             } else {
                 nextVal = currVal + (1 / denominator);
             }
-        }
-        Double d = Double.valueOf(currVal * 4);
-        return d;
+        }*/
+        return Double.valueOf(currVal * 4);
     }
 }

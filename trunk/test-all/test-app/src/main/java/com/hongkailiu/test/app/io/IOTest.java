@@ -1,5 +1,6 @@
 package com.hongkailiu.test.app.io;
 
+import lombok.extern.log4j.Log4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
@@ -10,17 +11,22 @@ import java.io.*;
  *
  * @author Liu
  */
-@Deprecated public class IOTest {
+@Deprecated @Log4j public class IOTest {
+    private IOTest(){
+
+    }
     public static void main(String[] args) {
-        System.out.println("IOTest.main");
-        String filename = "file\\test.dat";
+        log.info("IOTest.main");
+        //String filename = "file\\test.dat";
+        String filename = new File("file", "test.dat").getAbsolutePath();
+        log.info("" + System.getProperty("user.dir"));
         try {
-            System.out.println("read");
+            log.info("read");
             read(filename);
-            System.out.println("readCommonIO");
+            log.info("readCommonIO");
             readCommonIO(filename, "UTF-8");
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
 
     }
@@ -31,7 +37,7 @@ import java.io.*;
             br = new BufferedReader(new InputStreamReader(is));
             String line = null;
             while ((line = br.readLine()) != null) {
-                System.out.println(line);
+                log.info(line);
             }
         } finally {
             if (br != null) {
@@ -55,7 +61,7 @@ import java.io.*;
         try {
             while (it.hasNext()) {
                 String line = it.nextLine();
-                System.out.println("line: " + line);
+                log.info("line: " + line);
             }
         } finally {
             LineIterator.closeQuietly(it);

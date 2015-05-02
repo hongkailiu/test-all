@@ -3,6 +3,7 @@ package com.hongkailiu.test.app.xml.impl.dom;
 import com.hongkailiu.test.app.xml.XMLParser;
 import com.hongkailiu.test.app.xml.entity.Company;
 import com.hongkailiu.test.app.xml.entity.Staff;
+import lombok.extern.log4j.Log4j;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -18,7 +19,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class DomXMLParser implements XMLParser {
+@Log4j public class DomXMLParser implements XMLParser {
 
     @Override public Company parseXML2Company(String filename) {
         Company company = null;
@@ -42,10 +43,10 @@ public class DomXMLParser implements XMLParser {
             for (int i = 0; i < nodes.getLength(); i++) {
                 Node node = nodes.item(i);
 
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                if (node.getNodeType() == Node.ELEMENT_NODE && "staff".equals(((Element) node).getTagName())) {
 
                     Element element = (Element) node;
-                    if ("staff".equals(element.getTagName())) {
+                    //if ("staff".equals(element.getTagName())) {
                         Staff s = new Staff();
                         s.setId(Integer.parseInt(element.getAttribute("id")));
                         s.setFirstname(
@@ -58,22 +59,13 @@ public class DomXMLParser implements XMLParser {
                             element.getElementsByTagName("salary").item(0).getTextContent()));
                         staffSet.add(s);
                     }
-                    //					System.out.println("Staff id : " + element.getAttribute("id"));
-                    //					System.out.println("First Name : " + element.getElementsByTagName("firstname").item(0).getTextContent());
-                    //					System.out.println("Last Name : " + element.getElementsByTagName("lastname").item(0).getTextContent());
-                    //					System.out.println("Nick Name : " + element.getElementsByTagName("nickname").item(0).getTextContent());
-                    //					System.out.println("Salary : " + element.getElementsByTagName("salary").item(0).getTextContent());
 
-                }
+                //}
             }
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
+        } catch (ParserConfigurationException | FileNotFoundException | SAXException e) {
+            log.error(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return company;
     }

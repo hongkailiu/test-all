@@ -1,48 +1,54 @@
 package com.hongkailiu.test.app.cla;
 
+import lombok.extern.log4j.Log4j;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-public class ClassTest {
+@Log4j public class ClassTest {
+
+    private ClassTest(){
+
+    }
 
     public static void main(String[] args) {
-        System.out.println("ClassTest");
-        System.out.println("getName: " + ClassTest.class.getName());
+        log.info("ClassTest");
+        log.info("getName: " + ClassTest.class.getName());
         try {
             Class<?> clazz = java.lang.Class.forName("java.lang.Integer");
-            System.out.println("aaa: " + clazz);
+            log.info("aaa: " + clazz);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            log.error(e);
         }
 
-        Class<? extends Integer> iClazz = new Integer(3).getClass();
-        System.out.println("bbb: " + iClazz);
+        Class<? extends Integer> iClazz = Integer.class;
+        log.info("bbb: " + iClazz);
         Class<?> superIClazz = iClazz.getSuperclass();
-        System.out.println("ccc: " + superIClazz);
+        log.info("ccc: " + superIClazz);
         ClassLoader classLoader = iClazz.getClassLoader();
-        System.out.println("classLoader: " + classLoader);
+        log.info("classLoader: " + classLoader);
         try {
             // ref: http://stackoverflow.com/questions/1438420/how-to-get-a-class-object-from-the-class-name-in-java
             Class<?> clazzA = java.lang.Class.forName("com.hongkailiu.test.app.cla.A");
             A a1 = (A) clazzA.newInstance();
-            System.out.println("a1: " + a1);
+            log.info("a1: " + a1);
             Constructor<?> contructor1 = clazzA.getConstructor(int.class);
             A a2 = (A) contructor1.newInstance(6);
-            System.out.println("a2: " + a2);
+            log.info("a2: " + a2);
         } catch (InstantiationException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (SecurityException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 }

@@ -1,10 +1,11 @@
 package com.hongkailiu.test.app.thread;
 
 import com.hongkailiu.test.app.util.MathUtil;
+import lombok.extern.log4j.Log4j;
 
 import java.util.List;
 
-public class Consumer implements Runnable {
+@Log4j public class Consumer implements Runnable {
 
     private String name;
     private List<Integer> queue;
@@ -36,7 +37,7 @@ public class Consumer implements Runnable {
             while (true) {
                 Thread.sleep(MathUtil.random(100));
                 synchronized (queue) {
-                    while (queue.size() == 0) {
+                    while (queue.isEmpty()) {
                         queue.wait();
                     }
                     Integer e = queue.remove(0);
@@ -45,8 +46,7 @@ public class Consumer implements Runnable {
                 }
             }
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e);
         }
     }
 

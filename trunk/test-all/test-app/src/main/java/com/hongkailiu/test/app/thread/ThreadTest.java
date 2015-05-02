@@ -7,6 +7,7 @@ import java.util.Set;
 
 public class ThreadTest {
 
+    private ThreadTest(){}
     private final static int PRODUCER_NO = 3;
     private final static int CONSUMER_NO = 2;
 

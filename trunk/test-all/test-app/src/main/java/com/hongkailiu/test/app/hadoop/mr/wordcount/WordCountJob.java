@@ -3,6 +3,7 @@ package com.hongkailiu.test.app.hadoop.mr.wordcount;
 import com.hongkailiu.test.app.param.Param;
 import com.hongkailiu.test.app.util.ConfigUtil;
 import com.hongkailiu.test.app.util.Env;
+import com.hongkailiu.test.app.util.LogUtil;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
@@ -14,8 +15,12 @@ import java.io.IOException;
 
 public class WordCountJob {
 
-    public final static String MODULE_NAME = "wordcount";
-    private static Logger logger = Logger.getLogger(WordCountJob.class);
+    private WordCountJob() {
+
+    }
+
+    public static final String MODULE_NAME = "wordcount";
+    private static final Logger LOGGER = Logger.getLogger(WordCountJob.class);
 
     public static void run() throws IOException {
         String input = "hdfs://192.168.0.160:9000/user/huser/in";
@@ -46,7 +51,7 @@ public class WordCountJob {
     public static void main(String[] args) {
 
         if (args.length != 1) {
-            System.out.println(
+            LogUtil.systemOut(
                 "Usage : java com.hongkailiu.test.app.hadoop.mr.wordcount.WordCountJob -Dapp.home=<app.home> -Dlogfile.name=<logfile.name> "
                     + MODULE_NAME);
             return;
@@ -70,19 +75,19 @@ public class WordCountJob {
 
         // 初始化log4j
         ConfigUtil.configLog4j(log4jConfigFile.getPath());
-        logger.info("config log4j: done");
+        LOGGER.info("config log4j: done");
 
 
         // 初始化Spring的ApplicationContext.xml配置文件
         // logger.info("appContextPath = " + spring_path);
         File applicationContextFile = new File(confDir, MODULE_NAME + Param.SPRING_SURFIX);
-        logger.info("applicationContextFile : " + applicationContextFile.getAbsolutePath());
+        LOGGER.info("applicationContextFile : " + applicationContextFile.getAbsolutePath());
         if (!applicationContextFile.exists()) {
-            logger.info("Kafka App.main : spring config file does not exist !");
+            LOGGER.info("Kafka App.main : spring config file does not exist !");
             return;
         }
         if (!applicationContextFile.canRead()) {
-            logger.info("Kafka App.main : fail to load spring config file !");
+            LOGGER.info("Kafka App.main : fail to load spring config file !");
             return;
         }
         // applicationContextFile = null;
@@ -93,7 +98,7 @@ public class WordCountJob {
         } else {
             ConfigUtil.configSpring(applicationContextFile.getPath());
         }
-        logger.info("initialize spring ok!");
+        LOGGER.info("initialize spring ok!");
 
         //		HitDataTransporter transporter = new HitDataTransporter();
         //		try {
@@ -114,8 +119,7 @@ public class WordCountJob {
         try {
             run();
         } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
 
     }

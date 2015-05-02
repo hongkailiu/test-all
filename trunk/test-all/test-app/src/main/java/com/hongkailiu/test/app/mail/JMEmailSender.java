@@ -1,44 +1,41 @@
 package com.hongkailiu.test.app.mail;
 
-import com.sun.mail.smtp.SMTPTransport;
-
-import java.security.Security;
-import java.util.Date;
-import java.util.Properties;
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.Session;
-import javax.mail.internet.AddressException;
+import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.Date;
+import java.util.Properties;
 
 /**
  * Created by ehongka on 4/22/15.
  */
-public class Sender {
+public class JMEmailSender extends EmailSender {
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         try {
             System.out.println("aaa");
             send("liutestlt@sina.com", "leadtone123", "liutestlt@sina.com", "", "title", "test");
             System.out.println("aaa");
-        } catch (MessagingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    public static void send(final String username, final String password, String recipientEmail, String ccEmail, String title, String message) throws
-        AddressException, MessagingException {
-        Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+    @Override
+    public void send(String username, String password, String from, String to, String title, String message) throws
+        Exception {
+        //Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 
         // Get a Properties object
         Properties props = System.getProperties();
-        props.setProperty("mail.smtps.host", "smtp.sina.com");
+        props.setProperty("mail.smtps.host", GOOGLE_SMTP);
         props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
         props.setProperty("mail.smtp.socketFactory.fallback", "false");
-        props.setProperty("mail.smtp.port", "465");
-        props.setProperty("mail.smtp.socketFactory.port", "465");
+        props.setProperty("mail.smtp.port", String.valueOf(SSH_SMTP_PORT));
+        props.setProperty("mail.smtp.socketFactory.port", String.valueOf(SSH_SMTP_PORT));
         props.setProperty("mail.smtps.auth", "true");
 
         /*
@@ -58,19 +55,19 @@ public class Sender {
 
         // -- Set the FROM and TO fields --
         msg.setFrom(new InternetAddress(username));
-        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail, false));
+        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
 
-        if (ccEmail.length() > 0) {
+        /*if (ccEmail.length() > 0) {
             msg.setRecipients(Message.RecipientType.CC, InternetAddress.parse(ccEmail, false));
-        }
+        }*/
 
         msg.setSubject(title);
         msg.setText(message, "utf-8");
         msg.setSentDate(new Date());
 
-        SMTPTransport t = (SMTPTransport)session.getTransport("smtps");
+        Transport t = session.getTransport("smtps");
 
-        t.connect("smtp.sina.com", username, password);
+        t.connect(GOOGLE_SMTP, username, password);
         t.sendMessage(msg, msg.getAllRecipients());
         t.close();
     }

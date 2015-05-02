@@ -23,7 +23,7 @@ public class PiCalculatorTest {
 
     }
 
-    @Test public void test() throws Exception {
+    @Test public void testInAnotherThread() throws Exception {
         final ExecutorService executorService = Executors.newCachedThreadPool();
         final long startTime = System.currentTimeMillis();
         final Future<Double> future = executorService.submit(new PiCalculator());
@@ -36,7 +36,7 @@ public class PiCalculatorTest {
         executorService.shutdown();
     }
 
-    @Test public void sameThread() {
+    @Test public void testInSameThread() {
         System.out.println("Main thread id: " + Thread.currentThread().getId());
         ListeningExecutorService listeningExecutorService =
             MoreExecutors.newDirectExecutorService();

@@ -1,11 +1,12 @@
 package com.hongkailiu.test.app.hibernate.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
-@Entity @Table(name = "certificate") public class Certificate implements Serializable {
+@Entity @Table(name = "certificate") public class Certificate {//implements Serializable {
 
-    private static final long serialVersionUID = 5650067212639822933L;
+    //hibernate does not require entity to implement Serializable
+    //http://stackoverflow.com/questions/18741445/hibernate-entity-serializable
+    //private static final long serialVersionUID = 5650067212639822933L;
 
     @Id @Column(name = "id") @GeneratedValue(strategy = GenerationType.IDENTITY) private int id;
 

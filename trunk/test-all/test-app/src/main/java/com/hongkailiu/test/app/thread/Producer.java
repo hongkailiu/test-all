@@ -1,10 +1,11 @@
 package com.hongkailiu.test.app.thread;
 
 import com.hongkailiu.test.app.util.MathUtil;
+import lombok.extern.log4j.Log4j;
 
 import java.util.List;
 
-public class Producer implements Runnable {
+@Log4j public class Producer implements Runnable {
 
     private String name;
     private List<Integer> queue;
@@ -46,18 +47,17 @@ public class Producer implements Runnable {
             while (true) {
                 Thread.sleep(MathUtil.random(100));
                 synchronized (queue) {
-                    while (queue.size() == size) {
+                    while (queue.size()==size) {
                         queue.wait();
                     }
                     Integer e = new Integer(MathUtil.random(Integer.MAX_VALUE));
                     queue.add(e);
-                    System.out.println("producer " + name + ": " + e);
+                    log.info("producer " + name + ": " + e);
                     queue.notifyAll();
                 }
             }
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e);
         }
 
     }
