@@ -189,8 +189,20 @@
 	</dependencies>
 
 	<build>
-	<pluginManagement>
 		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<!--
+              <configuration>
+                <source>1.6</source>
+                <target>1.6</target>
+              </configuration> -->
+			</plugin>
 		    <plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.4</version>
@@ -215,6 +227,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
+				<!--
 				<version>2.12</version>
 				<executions>
 					<execution>
@@ -224,14 +237,8 @@
 							<goal>verify</goal>
 						</goals>
 					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.4.201502262128</version>
+				</executions> -->
 			</plugin>
 		</plugins>
-		</pluginManagement>
 	</build>
 </project>
