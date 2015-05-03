@@ -1,12 +1,17 @@
 package com.hongkailiu.test.app.aaa;
 
+import lombok.extern.log4j.Log4j;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Path {
+@Log4j public class Path {
 
+    private Path() {
+        super();
+    }
 
     static int[][] m = {{0, 1, 1, 0, 1, 1, 1, 1, 0, 1}, {0, 1, 0, 0, 0, 0, 1, 1, 1, 1},
         {0, 1, 0, 0, 1, 0, 1, 1, 1, 1}, {0, 0, 0, 1, 1, 0, 1, 1, 1, 1},
@@ -14,7 +19,7 @@ public class Path {
         {1, 1, 0, 1, 0, 0, 0, 0, 0, 1}, {1, 1, 0, 0, 1, 1, 1, 1, 0, 1},
         {0, 1, 1, 0, 1, 1, 1, 1, 0, 1}, {0, 1, 1, 1, 1, 1, 1, 1, 0, 0}};
     static boolean done = false;
-    static Map<Point, ArrayList<Point>> map = new LinkedHashMap<Point, ArrayList<Point>>();
+    static Map<Point, List<Point>> map = new LinkedHashMap<Point, List<Point>>();
 
     public static void main(String[] args) {
         constructMap();
@@ -22,25 +27,25 @@ public class Path {
         List<Point> path = findAPath();
         if (path != null) {
             for (Point p : path) {
-                System.out.println(p.x + " " + p.y);
+                log.info(p.x + " " + p.y);
             }
         } else {
-            System.out.println("no paths");
+            log.info("no paths");
         }
     }
 
     private static void printMap() {
         for (Point p : map.keySet()) {
-            System.out.print("key=[" + p.x + "," + p.y + "] value=");
+            log.info("key=[" + p.x + "," + p.y + "] value=");
             if (map.get(p) != null) {
                 for (Point myP : map.get(p)) {
-                    System.out.print("[" + myP.x + "," + myP.y + "]");
+                    log.info("[" + myP.x + "," + myP.y + "]");
                 }
 
             } else {
-                System.out.print("null");
+                log.info("null");
             }
-            System.out.println();
+            log.info("");
         }
 
     }
@@ -63,15 +68,15 @@ public class Path {
 
     private static Point findLastStep(Point tp) {
         for (Point p : map.keySet()) {
-            ArrayList<Point> steps = map.get(p);
+            List<Point> steps = map.get(p);
             for (Point sp : steps) {
                 if (sp.x == tp.x && sp.y == tp.y) {
-                    System.out.println("last p =[" + p.x + "," + p.y + "]");
+                    log.info("last p =[" + p.x + "," + p.y + "]");
                     return p;
                 }
             }
         }
-        System.out.println("something is wrong");
+        log.error("something is wrong");
         return null;
     }
 
@@ -86,8 +91,8 @@ public class Path {
     }
 
     private static void complete(Point p) {
-        ArrayList<Point> steps = getSteps(p);
-        ArrayList<Point> temp = new ArrayList<Point>();
+        List<Point> steps = getSteps(p);
+        List<Point> temp = new ArrayList<Point>();
         map.put(p, steps);
         for (Point myP : steps) {
             if (!contains(myP)) {
@@ -120,8 +125,8 @@ public class Path {
         return null;
     }
 
-    private static ArrayList<Point> getSteps(Point p) {
-        ArrayList<Point> steps = new ArrayList<Point>();
+    private static List<Point> getSteps(Point p) {
+        List<Point> steps = new ArrayList<Point>();
         if (p.x < 9 && m[p.x + 1][p.y] == 0) {
             steps.add(new Point(p.x + 1, p.y));
         }
@@ -139,7 +144,7 @@ public class Path {
 
 
     static public class Point {
-        public int x, y;
+        private final int x, y;
 
         public Point(int a, int b) {
             this.x = a;

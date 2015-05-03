@@ -1,16 +1,15 @@
 package com.hongkailiu.test.app.character;
 
+import org.junit.Test;
+
+/**
+ * Created by hongkailiu on 2015-05-02.
+ */
 public class CharTest {
 
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
-        test01();
-    }
-
-    private static void test01() {
+    @Test public void test() throws Exception {
         char c = '+';
         //c= Character.MAX_VALUE;
         System.out.println("numeric value of c: " + (int) c);
     }
-
 }

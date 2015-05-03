@@ -19,7 +19,7 @@ public class H {
     }
 
     private void init() {
-
+        i = i + 0;
     }
 
 }

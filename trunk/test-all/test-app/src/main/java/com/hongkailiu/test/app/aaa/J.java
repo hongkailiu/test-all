@@ -8,10 +8,12 @@ public class J extends H {
         super(i);
     }
 
+    @Override
     public int getI() {
         return i;
     }
 
+    @Override
     public void setI(int i) {
         this.i = i;
         init();
