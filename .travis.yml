@@ -4,4 +4,4 @@ jdk:
 
 install: sh -c 'cd trunk/test-all/ && mvn install -DskipTests=true -Dmaven.javadoc.skip=true'
 
-script: sh -c 'mvn test'
+script: sh -c 'cd trunk/test-all/ && mvn test'
