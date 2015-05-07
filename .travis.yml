@@ -2,8 +2,6 @@ language: java
 jdk:
   - oraclejdk8
 
-#install: "./.travis/install.sh"
 install: sh -c 'cd trunk/test-all/ && mvn install -DskipTests=true -Dmaven.javadoc.skip=true'
 
-#script: "./.travis/script.sh"
 script: sh -c 'mvn test'
