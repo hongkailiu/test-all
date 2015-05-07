@@ -2,6 +2,6 @@ language: java
 jdk:
   - oraclejdk8
 
-install: "./travis/install.sh"
+install: "./.travis/install.sh"
 
-script: "./travis/script.sh"
+script: "./.travis/script.sh"
