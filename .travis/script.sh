@@ -1,2 +1,2 @@
-cd ../trunk/test-all/
+cd ./trunk/test-all/
 mvn install
