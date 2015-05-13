@@ -18,6 +18,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-multi-node-testkit" % akkaVersion,
   //"org.fusesource" %% "sigar" % "1.6.4",
   "io.kamon" % "sigar-loader" % "1.6.5-rev001",
+  "org.scaldi" %% "scaldi" % "0.5.5",
   "org.scalatest" %% "scalatest" % "2.2.1" % "test",
   "org.mockito" % "mockito-all" % "1.10.19" % "test"
     )
