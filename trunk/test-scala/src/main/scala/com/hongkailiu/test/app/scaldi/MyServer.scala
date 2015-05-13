@@ -15,7 +15,7 @@ class MyServer(ip: String, port:Int) {
   }
 }
 
-object MyApp extends App with Injectable {
+object MyServer extends App with Injectable {
   val ip : String = "3.3.3.3"
   val port : Int = 2552
 
