@@ -7,7 +7,7 @@ lazy val root = (project in file("."))
 val akkaVersion = "2.3.9"
 //val akkaVersion = "2.4-SNAPSHOT"
 
-scalaVersion := "2.11.5"
+scalaVersion := "2.11.6"
 
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor" % akkaVersion,
@@ -25,4 +25,5 @@ libraryDependencies ++= Seq(
 
 testOptions in Test := Seq(Tests.Filter(s => s.endsWith("Test")))
 
-
+// fix scala version
+//ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
