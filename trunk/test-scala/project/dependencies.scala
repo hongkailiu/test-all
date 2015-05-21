@@ -3,7 +3,7 @@ import sbt._
 object Dependencies {
 
   // Versions
-  lazy val akkaVersion = "2.3.11"
+  lazy val akkaVersion = "2.3.9"
 
   // Libraries
   val nscalaTime = "com.github.nscala-time" %% "nscala-time" % "2.0.0"
@@ -19,6 +19,4 @@ object Dependencies {
   // Projects
   val testScalaDeps =
     Seq(nscalaTime, json, scalaLogging, logback, akka, akkaCluster, scalaTest % Test)
-
-
 }
