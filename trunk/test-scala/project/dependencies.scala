@@ -13,10 +13,10 @@ object Dependencies {
   val logback = "ch.qos.logback" % "logback-classic" % "1.0.3"
   val akka = "com.typesafe.akka" %% "akka-actor" % akkaVersion
   val akkaCluster = "com.typesafe.akka" %% "akka-cluster" % akkaVersion
+  val akkaTestkit = "com.typesafe.akka" %% "akka-testkit" % akkaVersion
   val scalaTest = "org.scalatest" % "scalatest_2.11" % "2.2.4"
-
 
   // Projects
   val testScalaDeps =
-    Seq(nscalaTime, json, scalaLogging, logback, akka, akkaCluster, scalaTest % Test)
+    Seq(nscalaTime, json, scalaLogging, logback, akka, akkaCluster, scalaTest % Test, akkaTestkit % Test)
 }
