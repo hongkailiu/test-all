@@ -1,13 +1,23 @@
 package controllers
 
+import models.Person
 import play.api.mvc.{Action, Controller}
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
 
 object Persons extends Controller {
   def list = Action {
-    Ok(views.html.index("Hello Play Framework: list"))
+    //Ok(views.html.index("Hello Play Framework: list"))
+    val json = Json.toJson(Person.list)
+    Ok(json)
   }
 
   def show(id:Long) = Action {
     Ok(views.html.index("Hello Play Framework: show: " + id))
   }
+
+  implicit val placeWrites: Writes[Person] = (
+    (JsPath \ "id").write[Long] and
+      (JsPath \ "name").write[String]
+    )(unlift(Person.unapply))
 }
