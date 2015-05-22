@@ -1,5 +1,6 @@
 package controllers
 
+import Service.PersonService
 import models.Person
 import play.api.mvc.{Action, Controller}
 import play.api.libs.json._
@@ -9,7 +10,7 @@ object Persons extends Controller {
   //http://localhost:9000/persons/all
   def list = Action {
     //Ok(views.html.index("Hello Play Framework: list"))
-    val json = Json.toJson(Person.list)
+    val json = Json.toJson(PersonService.list)
     Ok(json)
   }
 
