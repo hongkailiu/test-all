@@ -28,28 +28,19 @@ class MyHandler() extends ResultHandler {
   override def handle(queryResult: QueryResult): Unit = {
 
     val list: List[Status] = queryResult.getTweets
-    //println(list)
     if (list!=null){
-      //list.forEach(e => handleStatus(e))
-      //list.foreach(s:Status => println(s))
-      //implicit def javaIteratorToScalaIterator[A](it : java.util.Iterator[A]) = new Wrapper(it)
-      //for (elem:List ) {
-
-      //}
       for(x <- list) handleStatus(x)
-      //numbers.foreach((i: Int) => i * 2)
-      //}
     }
 
   }
 
   def handleStatus(status:Status): Unit = {
-    println("=====a=======")
+    /*println("=====a=======")
     println(status.getCreatedAt)
     println(status.getId)
     println(status.getText)
-    println("=====b=======")
-    //val twitt = new Twitt(status.getCreatedAt.toString, java.lang.Long.toString(status.getId), status.getText)
-    //println(twitt)
+    println("=====b=======")*/
+    val twitt = new Twitt(status.getCreatedAt.toString, java.lang.Long.toString(status.getId), status.getText)
+    println(twitt)
   }
 }

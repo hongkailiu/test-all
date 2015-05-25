@@ -11,3 +11,11 @@ GET     /webjars/*file              controllers.WebJarAssets.at(file)
 # person
 GET     /persons/all                controllers.Persons.list()
 GET     /persons/:id                controllers.Persons.show(id: Long)
+
+#ws
+GET     /hello                      controllers.Application.wsHello
+
+#twitter
+GET     /twitter                    controllers.Twitter.index
+GET     /twitter/show/:hashTag      controllers.Twitter.show(hashTag: String)
+GET     /twitter/api                controllers.Twitter.twitterWebSocket
