@@ -3,7 +3,7 @@ package helper
 import java.util.List
 import java.util.concurrent.{ExecutorService, Executors}
 
-import Messages.{MyMessageMinus, MyMessagePlus}
+import Messages.{MyMessageTwitt, MeMessageOut, MyMessageMinus, MyMessagePlus}
 import models.Twitt
 import play.Logger
 import twitter4j.{Status, QueryResult}
@@ -23,19 +23,11 @@ object TwitterHelper {
   val myActorRef = play.libs.Akka.system.actorOf(Props[MyActor], name = "myactor")
 
   def start() = {
-
     pool.submit(new TwitterService(dwts, 3, 10 * 1000, myHandler))
   }
 
+  val dwtsSet:Set[Twitt] = Set()
 
-
-  def plus(actorRef: ActorRef) = {
-
-  }
-
-  def minus(actorRef: ActorRef) = {
-
-  }
 }
 
 
@@ -57,25 +49,37 @@ class MyHandler() extends ResultHandler {
     println("=====b=======")*/
     val twitt = new Twitt(status.getCreatedAt.toString, java.lang.Long.toString(status.getId), status.getText)
     println(twitt)
-
+    TwitterHelper.myActorRef ! MyMessageTwitt(TwitterHelper.dwts, twitt)
   }
 }
 
 
 class MyActor extends Actor {
 
-  var outs: Set[ActorRef] = Set()
+  //var outs: Set[ActorRef] = Set()
+  var map:Map[MeMessageOut, Set[Twitt]] = Map()
 
   //private[this] var (channel) = Concurrent.broadcast[String]
   override def receive = {
 
     case MyMessagePlus(out,name) => {
       Logger.info(s"MyActor: plug $out $name.")
-      outs = outs + out
+      //outs = outs + out
+      map = map + (MyMessagePlus(out,name) -> Set())
     }
     case MyMessageMinus(out,name)  => {
       Logger.info(s"MyActor: minus $out $name.")
-      outs = outs - out
+      //outs = outs - out
+      map = map - MyMessagePlus(out,name)
+    }
+    case MyMessageTwitt(name, twitt)  => {
+      Logger.info(s"MyActor: MyMessageTwitt $name $twitt.")
+      //outs = outs - out
+      val notifyMap = map.filterKeys{
+        case MyMessagePlus(out,name) => TwitterHelper.dwts.equals(name)
+      }
+      // TODO: send message to out
+
     }
     case _ => Logger.info("Someone said goodbye to me.")
     //case msg: String => {
@@ -86,13 +90,17 @@ class MyActor extends Actor {
   }
   override def preStart() = {
     Logger.info("MyActor: preStart!")
-    outs = Set()
+    //outs = Set()
+     map = Map()
   }
 
   override def postStop() = {
     Logger.info("MyActor: postStop!")
-    if (outs!=null) {
+    /*if (outs!=null) {
       outs = null
+    }*/
+    if (map!=null){
+      map=null
     }
   }
 
