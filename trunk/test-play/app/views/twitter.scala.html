@@ -45,6 +45,14 @@ $(document).ready(function(){
                 leng = event.data.size
             }
             //alert("onmessage. size: " + leng + ", content: " + event.data);
+            jQuery('<div/>', {
+   // id: 'foo',
+   // href: 'http://google.com',
+   // title: 'Become a Googler',
+   // rel: 'external',
+    text: event.data
+}).appendTo('#twitt');
+            //$( "#twitt" ).append( $( "h2" ) );
             console.log("onmessage. size: " + leng + ", content: " + event.data);
         }
 
@@ -83,7 +91,7 @@ $(document).ready(function(){
 <div id="hashTag" class="container">
     @message
 </div>
-
+<!--
 <div>
 
     <form>
@@ -99,6 +107,10 @@ $(document).ready(function(){
     <input type="button" onclick="sendMsg()" value="Send message" />
 
     <input type="button" onclick="closeConn()" value="Close connection" />
+</div> -->
+
+<div id="twitt" class="container">
+
 </div>
 </body>
 </html>

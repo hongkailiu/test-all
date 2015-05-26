@@ -75,7 +75,7 @@ class MyActor extends Actor {
     case MyMessageTwitt(name, twitt)  => {
       Logger.info(s"MyActor: MyMessageTwitt $name $twitt.")
       //outs = outs - out
-      Logger.info("map: " + map)
+      //Logger.info("map: " + map)
       val notifyMap = map.filter{
         case (MyMessagePlus(out,name), s:Set[Twitt]) => {
           //Logger.info("MyMessagePlus(out,name): "+MyMessagePlus(out,name))
@@ -83,12 +83,17 @@ class MyActor extends Actor {
           TwitterHelper.dwts.equals(name)
         }
       }
-      Logger.info("notifyMap: " + notifyMap)
+      //Logger.info("notifyMap: " + notifyMap)
       notifyMap.foreach { case (MyMessagePlus(out,name), s:Set[Twitt]) => {
         if (!s.contains(twitt)) {
           Logger.info("send to : " + out + " with: " + twitt)
           out ! twitt.toString
           map = map + (MyMessagePlus(out,name) -> (s+twitt))
+        } else {
+          val msg:String = new java.util.Date().toString + ": twitt already displayed, nothing new!"
+          //val msg:String = "twitt already displayed, nothing new!"
+          Logger.info("send to : " + out + " with: " + msg)
+          //out ! msg
         }
       } }
 
