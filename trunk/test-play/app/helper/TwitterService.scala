@@ -18,7 +18,7 @@ class TwitterService(hashTag:String, count:Int, interval: Long , resultHandler: 
   val tf = new TwitterFactory(cb.build())
   val twitter = tf.getInstance()
   //val dwtsQuery = new Query("#dwts")
-  val dwtsQuery = new Query(hashTag)
+  val dwtsQuery = new Query("#" + hashTag)
 
   def run() {
     try {

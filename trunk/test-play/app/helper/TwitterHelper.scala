@@ -17,7 +17,7 @@ import scala.collection.JavaConversions._
 object TwitterHelper {
 
   val pool: ExecutorService = Executors.newFixedThreadPool(1)
-  val dwts = "#dwts"
+  val dwts = "dwts"
   val myHandler = new MyHandler
 
   val myActorRef = play.libs.Akka.system.actorOf(Props[MyActor], name = "myactor")
@@ -48,7 +48,7 @@ class MyHandler() extends ResultHandler {
     println(status.getText)
     println("=====b=======")*/
     val twitt = new Twitt(status.getCreatedAt.toString, java.lang.Long.toString(status.getId), status.getText)
-    println(twitt)
+    //println(twitt)
     TwitterHelper.myActorRef ! MyMessageTwitt(TwitterHelper.dwts, twitt)
   }
 }
@@ -75,13 +75,25 @@ class MyActor extends Actor {
     case MyMessageTwitt(name, twitt)  => {
       Logger.info(s"MyActor: MyMessageTwitt $name $twitt.")
       //outs = outs - out
-      val notifyMap = map.filterKeys{
-        case MyMessagePlus(out,name) => TwitterHelper.dwts.equals(name)
+      Logger.info("map: " + map)
+      val notifyMap = map.filter{
+        case (MyMessagePlus(out,name), s:Set[Twitt]) => {
+          //Logger.info("MyMessagePlus(out,name): "+MyMessagePlus(out,name))
+          //Logger.info("TwitterHelper.dwts.equals(name): " +  TwitterHelper.dwts.equals(name))
+          TwitterHelper.dwts.equals(name)
+        }
       }
-      // TODO: send message to out
+      Logger.info("notifyMap: " + notifyMap)
+      notifyMap.foreach { case (MyMessagePlus(out,name), s:Set[Twitt]) => {
+        if (!s.contains(twitt)) {
+          Logger.info("send to : " + out + " with: " + twitt)
+          out ! twitt.toString
+          map = map + (MyMessagePlus(out,name) -> (s+twitt))
+        }
+      } }
 
     }
-    case _ => Logger.info("Someone said goodbye to me.")
+    case _ => Logger.info("MyActor receive: unknown message")
     //case msg: String => {
     //  Logger.info("MyWebSocketActor receive: " + msg)
     //  out ! msg

@@ -19,8 +19,15 @@ object Twitter extends Controller {
     Ok(views.html.twitter(hashTag))
   }
 
-  def twitterWebSocket = WebSocket.acceptWithActor[String, String] { request => out =>
-    MyWebSocketActor.props(out, "abc")
+  def twitterWebSocket = WebSocket.acceptWithActor[String, String] { request => out => {
+    Logger.info("request.uri: " + request.uri)
+    val uri:String = request.uri
+    val name:String = uri.substring(uri.lastIndexOf('/')+1)
+    Logger.info("name: " + name)
+    //MyWebSocketActor.props(out, TwitterHelper.dwts)
+    MyWebSocketActor.props(out,name)
+  }
+
   }
 
 }
@@ -31,7 +38,7 @@ object MyWebSocketActor {
 
 class MyWebSocketActor(out: ActorRef, name:String) extends Actor {
   override def preStart() = {
-    Logger.info("Connected!")
+    Logger.info("MyWebSocketActor: Connected!")
     TwitterHelper.myActorRef ! MyMessagePlus(out,name)
   }
 
@@ -44,7 +51,7 @@ class MyWebSocketActor(out: ActorRef, name:String) extends Actor {
 
   }
   override def postStop() = {
-    Logger.info("Disconnected!")
+    Logger.info("MyWebSocketActor: Disconnected!")
     TwitterHelper.myActorRef ! MyMessageMinus(out,name)
   }
 
