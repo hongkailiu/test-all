@@ -18,4 +18,4 @@ GET     /hello                      controllers.Application.wsHello
 #twitter
 GET     /twitter                    controllers.Twitter.index
 GET     /twitter/show/:hashTag      controllers.Twitter.show(hashTag: String)
-GET     /twitter/api                controllers.Twitter.twitterWebSocket
+GET     /twitter/api/abc                controllers.Twitter.twitterWebSocket

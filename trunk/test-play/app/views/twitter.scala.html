@@ -15,14 +15,21 @@
     <script type="text/javascript">
 
 $(document).ready(function(){
-    //alert("ready");
-    connectToWS()
+    //alert("ready" + $("#hashTag").text());
+    var hashTag = $.trim($("#hashTag").text());;
+    connectToWS(hashTag);
 });
     var myWebSocket;
 
 
-    function connectToWS() {
-        var endpoint = "ws://localhost:9000/twitter/api"; //document.getElementById("endpoint").value;
+    function connectToWS(hashTag) {
+        if (hashTag=="abc" || hashTag=="abc" )  {
+        var endpoint = "ws://localhost:9000/twitter/api/" + hashTag;
+        } else {
+            return;
+        }
+
+        //var endpoint = "ws://localhost:9000/twitter/api/"; //document.getElementById("endpoint").value;
 
         if (myWebSocket !== undefined) {
             myWebSocket.close()
@@ -73,7 +80,7 @@ $(document).ready(function(){
         </div>
     </div>
 </div>
-<div class="container">
+<div id="hashTag" class="container">
     @message
 </div>
 
