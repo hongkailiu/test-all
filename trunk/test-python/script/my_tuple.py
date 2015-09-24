@@ -3,6 +3,7 @@
 
 ###
 # Tuples can be thought of as read-only lists.
+# A tuple is a sequence of immutable Python objects.
 ###
 
 my_tuple = ( 'word', 786, 2.23, 'john', 70.2)

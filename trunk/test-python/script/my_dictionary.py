@@ -15,3 +15,13 @@ print my_dict[2]           # Prints value for 2 key
 print tiny_dict          # Prints complete dictionary
 print tiny_dict.keys()   # Prints all the keys
 print tiny_dict.values()  # Prints all the values
+
+my_dict = {'Name': 'Zara', 'Age': 7, 'Class': 'First'};
+
+print "my_dict['Name']: ", my_dict['Name']
+print "my_dict['Age']: ", my_dict['Age']
+
+# traverse a dictionary
+for key in my_dict.keys():
+    print my_dict.get(key)
+
