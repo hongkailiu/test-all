@@ -55,6 +55,8 @@ del var1, var2
 
 print "a"
 # not defined error if not commented out
-#print var1
-#print var2
+# print var1
+# print var2
 print "b"
+
+
