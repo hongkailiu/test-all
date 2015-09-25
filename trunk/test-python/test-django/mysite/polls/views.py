@@ -26,3 +26,11 @@ def detail(request, question_id):
         raise Http404("Question does not exist")
     return render(request, 'polls/detail.html', {'question': question})
 
+
+def json(request):
+    from django.utils import timezone
+    # http://stackoverflow.com/questions/25659178/serialize-datetime-datetime-object-as-json
+    # json on timezone
+    q = Question(question_text="What's new?: test json", pub_date=timezone.now().isoformat())
+    return HttpResponse(q.to_json())
+
