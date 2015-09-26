@@ -1,7 +1,7 @@
 /.idea/
 *.iml
 !*.pyc
-!*.sqlite3
+mysite/db.sqlite3
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
