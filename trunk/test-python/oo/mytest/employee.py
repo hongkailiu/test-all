@@ -11,9 +11,13 @@ class Employee:
         Employee.emp_count += 1
 
     @staticmethod
-    def display_count(self):
+    def display_count():
         print "Total Employee %d" % Employee.emp_count
 
     def display_employee(self):
         print "Name : ", self.name,  ", Salary: ", self.salary
+
+    @staticmethod
+    def get_count():
+        return Employee.emp_count
 
