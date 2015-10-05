@@ -4,7 +4,7 @@
   <groupId>tk.hongkailiu.test-nexus</groupId>
   <artifactId>test-nexus</artifactId>
   <packaging>jar</packaging>
-  <version>1.3-SNAPSHOT</version>
+  <version>1.6-SNAPSHOT</version>
   <name>test-nexus</name>
   <url>http://maven.apache.org</url>
   <dependencies>
