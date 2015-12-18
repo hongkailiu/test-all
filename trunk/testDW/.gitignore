@@ -1,0 +1,6 @@
+#intellij
+.idea/
+dependency-reduced-pom.xml
+hello-world.yml
+testDW.iml
+target/
