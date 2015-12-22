@@ -5,6 +5,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
 public class HelloWorldApplication extends Application<HelloWorldConfiguration> {
+    // our application’s entry point
     public static void main(String[] args) throws Exception {
         new HelloWorldApplication().run(args);
     }
@@ -30,6 +31,8 @@ public class HelloWorldApplication extends Application<HelloWorldConfiguration> 
             new TemplateHealthCheck(configuration.getTemplate());
         environment.healthChecks().register("template", healthCheck);
         environment.jersey().register(resource);
+
+        environment.admin().addTask(new MyTestTask(15));
     }
 
 }
