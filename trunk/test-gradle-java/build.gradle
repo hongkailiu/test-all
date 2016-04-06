@@ -8,7 +8,16 @@
  */
 
 // Apply the java plugin to add support for Java
-apply plugin: 'java'
+//apply plugin: 'java'
+plugins {
+    id 'java' // or 'groovy' Must be explicitly applied
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+version = '1.0'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -29,4 +38,14 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compileOnly "org.projectlombok:lombok:1.16.8"
+    compile 'org.apache.logging.log4j:log4j-core:2.1'
+    compile 'org.apache.logging.log4j:log4j-api:2.1'
+    compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.1'
+    compile 'com.jayway.restassured:rest-assured:2.9.0'
+}
+
+shadowJar {
+    manifest {
+        attributes 'Main-Class': 'tk.hongkailiu.test.App'
+    }
 }
