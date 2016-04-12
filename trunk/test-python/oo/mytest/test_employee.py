@@ -4,7 +4,7 @@ from employee import Employee
 __author__ = 'ehongka'
 
 
-class TestUM(unittest.TestCase):
+class TestEmployeeMethods(unittest.TestCase):
 
     unit_under_test = None
 
